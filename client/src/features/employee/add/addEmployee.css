@@ -1,0 +1,31 @@
+.add-employee-container{
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.add-employee-form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.add-employee-form input,
+.add-employee-form select{
+    padding: 30px;
+    background-color: var(--bg);
+    color: var(--text);
+    border-radius: 5px;
+    margin-bottom: 30px;
+    width: 45%;
+}
+.add-employee-form button{
+    width: 100%;
+    padding: 30px;
+    background-color: teal;
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
