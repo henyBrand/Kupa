@@ -36,16 +36,16 @@ const getFamilyById = async (req, res) => {
 }
 
 const addFamily = async (req, res) => {
-    const tzFile = (req.file?.filename ? req.file.filename : "")
-    console.log(req.file);
+    // const tzFile = (req.file?.filename ? req.file.filename : "")
+    // console.log(req.file);
     const { employee, name, username, password, address, phone, email, marital_status, bank_details, parent1, parent2, child } = req.body
-    // if (!name || !password || !username || !marital_status || !bank_details) {
-    //     return res.status(400).json({
-    //         error: true,
-    //         message: "name, username, password, marital_status and bank_details are required",
-    //         data: null
-    //     })
-    // }
+    if (!name || !password || !username || !marital_status || !bank_details) {
+        return res.status(400).json({
+            error: true,
+            message: "name, username, password, marital_status and bank_details are required",
+            data: null
+        })
+    }
     const hashPassword = await bcrypt.hash(password, 10)
     let duplicate = await Family.findOne({ username }).lean()
     if (!duplicate) {
@@ -58,7 +58,8 @@ const addFamily = async (req, res) => {
             data: null
         })
     }
-    const family = await Family.create({ employee, name, username, password: hashPassword, address, phone, email, marital_status, bank_details, parent1, parent2, child, tzFile })
+
+    const family = await Family.create({ employee, name, username, password: hashPassword, address, phone, email, marital_status, bank_details, parent1, parent2, child })
     if (!family) {
         return res.status(404).json({
             error: true,
@@ -72,16 +73,37 @@ const addFamily = async (req, res) => {
         data: { username: family.username, _id: family._id }
     })
 }
+
+const updateTzFile = async (req, res) => {
+    const tzFile = (req.file?.filename ? req.file.filename : "");
+
+    const { id } = req.params;
+
+    const family = await Family.findById(id, { password: 0 });
+    if (!family) {
+        return res.status(400).json({
+            error: true,
+            message: "no family",
+            data: null
+        });
+    }
+
+    family.tzFile = tzFile;
+
+    const updateFamily = await family.save();
+
+    res.json({
+        error: false,
+        message: "The family was successfully updated",
+        data: { id }
+    });
+}
+
 const updateFamily = async (req, res) => {
-    const tzFile = req.file?.tzFile?.[0]?.filename||req.body.tzFile
-    console.log(tzFile);
     const { id, employee, name, username, password, address, phone, email, marital_status, bank_details, parent1, parent2, child ,waiting,approved} = req.body
     if (!id) {
         return res.status(404).send("ID is required")
     }
-    console.log("tzFile");
-    console.log(tzFile);
-
     console.log("name");
     console.log(name);
     console.log("username");
@@ -102,25 +124,18 @@ const updateFamily = async (req, res) => {
         family.password = hashPassword
     }
 
-
     if (username) {
-
         const duplicate = await Family.findOne({ username }).lean()
         if (duplicate && duplicate.username !== family.username) {
-
             return res.status(409).json({
                 error: true,
                 message: "duplicate username",
                 data: null
             })
         }
-
     }
 
     family.employee = employee
-    
-    
-
     family.name = name
     family.username = username
     family.address = address
@@ -133,8 +148,6 @@ const updateFamily = async (req, res) => {
     family.child = child
     family.waiting = waiting
     family.approved = approved
-    if (tzFile)
-        family.tzFile = tzFile
 
     const updateFamily = await family.save()
 
@@ -182,4 +195,4 @@ const deleteFamily = async (req, res) => {
     // })
 }
 
-module.exports = { getAllFamilies, getFamilyById, addFamily, updateFamily, deleteFamily } 
+module.exports = { getAllFamilies, getFamilyById, addFamily, updateFamily, deleteFamily , updateTzFile} 

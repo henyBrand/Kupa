@@ -33,7 +33,6 @@ const FamilyStatus = () => {
             FamilyStatus
 
             <h1>שלום משפחת {family.name} </h1>
-            {/* <h3>הנכם עכשיו {family.waiting}?"במצב ממתין":"כבר לא ממתינים"</h3> */}
 
 
         </>

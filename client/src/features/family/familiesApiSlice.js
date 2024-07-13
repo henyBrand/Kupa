@@ -31,8 +31,17 @@ const familiesApiSlice = apiSlice.injectEndpoints({
                 body: { _id }
             }),
             invalidatesTags: ["Families"]
-        })
+        }),
+        updateTzFile: build.mutation({
+            query: (data) => ({
+                url: `/api/family/${data.get("id")}`, // Using FormData to include the ID
+                method: "PUT",
+                body: data
+            }),
+            invalidatesTags: ["Families"]
+        }),
+        
     })
 
 })
-export const { useGetAllFamiliesQuery, useAddFamilyMutation, useUpdateFamilyMutation, useDeleteFamilyMutation } = familiesApiSlice
+export const { useGetAllFamiliesQuery, useAddFamilyMutation, useUpdateFamilyMutation, useDeleteFamilyMutation ,useUpdateTzFileMutation} = familiesApiSlice

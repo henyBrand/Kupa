@@ -47,12 +47,13 @@ router.use(verifyJWT)
 
 router.get("/", FamilyController.getAllFamilies)
 router.get("/:id", FamilyController.getFamilyById)
-// router.post("/", verifyAdmin, upload.single("tzFile"), FamilyController.addFamily)
+router.post("/", verifyAdmin, FamilyController.addFamily)
+router.put("/:id", upload.single("tzFile"), FamilyController.updateTzFile)
 
-router.post("/",verifyAdmin, upload.fields([
-    { name: 'tzFile', maxCount: 1 },
+// router.post("/",verifyAdmin, upload.fields([
+//     { name: 'tzFile', maxCount: 1 },
 
-]), FamilyController.addFamily);
+// ]), FamilyController.addFamily);
 router.put("/", upload.single('tzFile'), FamilyController.updateFamily)
 router.delete("/", verifyAdmin, FamilyController.deleteFamily)
 

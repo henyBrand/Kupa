@@ -69,7 +69,6 @@ const AddFamily = () => {
                 branch_number: objFamily.branch_number,
                 account_number: objFamily.account_number
             },
-            // tzfile:data.tzfile
         }
 
         addFamily(newObjFamily)
@@ -132,9 +131,7 @@ const AddFamily = () => {
                     <input type="text" required="true" name="branch_number" placeholder="מספר סניף" />
                     <input type="text" required="true" name="account_number" placeholder="מספר חשבון" />
                 </label>
-                <label>צילום ת"ז</label>
-                <input type="file" name="tzFile" />
-
+            
                 <button type="submit">שלח</button>
             </form>
 

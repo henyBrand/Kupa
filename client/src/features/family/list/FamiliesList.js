@@ -9,7 +9,6 @@ import { useState } from "react"
 import { FaFile, FaCirclePlus, FaRegPenToSquare } from "react-icons/fa6";
 import { MdCancel, MdCheckCircle } from "react-icons/md"
 
-
 const FamiliesList = () => {
     const { role, _id } = useAuth()
     const { data: familiesObj, isError, error, isLoading } = useGetAllFamiliesQuery()
@@ -19,6 +18,7 @@ const FamiliesList = () => {
     const q = searchParams.get("q")
 
     const { getFilePath } = useGetFilePath()
+
     if (isLoading)
         return <h1>Loading...</h1>
     if (isError)
@@ -28,13 +28,6 @@ const FamiliesList = () => {
 
     //להוסיף תנאים לפילטור (שם הבעל,האשה וכו)
     const namesArr = q && q.split(" ")
-
-    familiesObj.data.forEach(family => {
-        if (namesArr) {
-            // console.log(family.name + " " + family?.parent1?.first_name + " " + family.parent2?.first_name === namesArr[0] + " " + namesArr[1] + " " + namesArr[2])
-            // console.log(family.name + " " + family?.parent1?.first_name + " " + family.parent2?.first_name, namesArr[0] + " " + namesArr[1] + " " + namesArr[2])
-        }
-    });
 
     let filteredData = !q ? [...familiesObj.data] : familiesObj.data.filter(family =>
         family.name.indexOf(q) > -1 ||
@@ -103,13 +96,12 @@ const FamiliesList = () => {
                                 </div>
                             </td>
                             <td>
-                                <Link to={getFilePath(family.tzFile)}><FaFile />
-                                </Link>
-                                
+                                {family.tzFile && <Link to={getFilePath(family.tzFile)}><FaFile />
+                                    </Link>
+                                }
 
                                 <Link to={`/dash/families/${family._id}`} className="families-list-button families-list-view"><FaRegPenToSquare />
                                 </Link>
-                                {/* {role === 'מנהל' && <select name="employee" onChange={(event) => handleUpdateFamily(event, family)}> */}
 
                             </td>
                         </tr>)}

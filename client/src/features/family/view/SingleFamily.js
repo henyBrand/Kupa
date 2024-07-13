@@ -93,7 +93,6 @@ const SingleFamily = () => {
                 branch_number: objFamily.branch_number,
                 account_number: objFamily.account_number
             },
-            tzFile: formData.get('tzFile'),
             approved:family.approved,
             waiting:family.waiting
         
@@ -177,10 +176,8 @@ const SingleFamily = () => {
                         <input type="text" defaultValue={family.bank_details?.branch_number} required name="branch_number" placeholder="מספר סניף" />
                         <input type="text" defaultValue={family.bank_details?.account_number} required name="account_number" placeholder="מספר חשבון" />
                     </label>
+                    <AddTzFile FamId={family._id} />
                     {role === 'מנהל' && <ChangeEmployeeForFamily family={family} />}
-                    <label>צילום ת"ז</label>
-                    <input type="file" name="tzFile" />
-
                     <button>שלח</button>
                 </form>
             </div>
