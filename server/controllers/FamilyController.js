@@ -18,6 +18,7 @@ const getAllFamilies = async (req, res) => {
         data: family
     })
 }
+
 const getFamilyById = async (req, res) => {
     const { id } = req.params
     const family = await Family.findById(id, { password: 0 }).lean()
@@ -76,6 +77,8 @@ const addFamily = async (req, res) => {
 
 const updateTzFile = async (req, res) => {
     const tzFile = (req.file?.filename ? req.file.filename : "");
+    console.log("tzFile");
+    console.log(tzFile);
 
     const { id } = req.params;
 
@@ -100,7 +103,7 @@ const updateTzFile = async (req, res) => {
 }
 
 const updateFamily = async (req, res) => {
-    const { id, employee, name, username, password, address, phone, email, marital_status, bank_details, parent1, parent2, child ,waiting,approved} = req.body
+    const { id, employee, name, username, password, address, phone, email, marital_status, bank_details, parent1, parent2, child, waiting, approved } = req.body
     if (!id) {
         return res.status(404).send("ID is required")
     }
@@ -158,6 +161,7 @@ const updateFamily = async (req, res) => {
     })
 
 }
+
 const deleteFamily = async (req, res) => {
     const { id } = req.body
     if (!id) {
@@ -195,4 +199,4 @@ const deleteFamily = async (req, res) => {
     // })
 }
 
-module.exports = { getAllFamilies, getFamilyById, addFamily, updateFamily, deleteFamily , updateTzFile} 
+module.exports = { getAllFamilies, getFamilyById, addFamily, updateFamily, deleteFamily, updateTzFile } 

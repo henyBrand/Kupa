@@ -9,7 +9,7 @@ const useAuth = () => {
     let isEmployee = false
     if (token) {
         const userDecode = jwtDecode(token)
-        console.log("userDecode", userDecode)
+        // console.log("userDecode", userDecode)
         const { _id, username, role, name } = userDecode
         isAdmin = role === "מנהל"
         isEmployee = role === "נציג"

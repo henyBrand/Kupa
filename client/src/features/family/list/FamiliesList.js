@@ -96,9 +96,7 @@ const FamiliesList = () => {
                                 </div>
                             </td>
                             <td>
-                                {family.tzFile && <Link to={getFilePath(family.tzFile)}><FaFile />
-                                    </Link>
-                                }
+                                {family.tzFile && <a href={getFilePath(family.tzFile)} target="_blank" rel="noopener noreferrer"><FaFile /></a>}
 
                                 <Link to={`/dash/families/${family._id}`} className="families-list-button families-list-view"><FaRegPenToSquare />
                                 </Link>
