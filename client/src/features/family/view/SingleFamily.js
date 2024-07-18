@@ -19,7 +19,7 @@ const SingleFamily = () => {
     const [birthDate, setbirth_date] = useState("")
     const [tuitionS, settuition] = useState("")
     const [add, setAdd] = useState(false)
-    const [chai, setChai] = useState([])
+    const [chi, setChai] = useState([])
 
     useEffect(() => {
         if (isUpdateSuccess) {
@@ -52,11 +52,10 @@ const SingleFamily = () => {
         const data = new FormData(e.target)
 
         const objFamily = Object.fromEntries(data.entries())
-        console.log("objFamily.name");
-        console.log(objFamily.name);
+        
         const newObjFamily = {
+            name: objFamily.familyname,
             id: familyId,
-            name: objFamily.name,
             username: objFamily.username,
             password: objFamily.password,
             address: {
@@ -82,7 +81,7 @@ const SingleFamily = () => {
                 phone: objFamily.phone2,
                 occupation: objFamily.occupation2
             },
-            child: chai,
+            child: chi,
             bank_details: {
                 name: objFamily.name,
                 bank_number: objFamily.bank_number,
@@ -117,7 +116,9 @@ const SingleFamily = () => {
             </div>
             <div className="single-family-form-container">
                 <form onSubmit={formSubmit} className="single-family-form">
-                    <input type="text" defaultValue={family.name} required name="name" placeholder="שם משפחה" />
+
+                    <input type="text" defaultValue={family.name} required name="familyname" placeholder="שם משפחה" />
+                    
                     <input type="text" defaultValue={family.username} required name="username" placeholder="שם משתמש" />
                     <input type="password" defaultValue={family.password} name="password" placeholder="סיסמה" />
                     <label name="parent1">
@@ -137,7 +138,7 @@ const SingleFamily = () => {
                         <input type="text" defaultValue={family.parent2?.occupation} name="occupation2" placeholder="עיסוק" />
                     </label>
                     <h3>ילדים</h3>
-                    {chai?.map((c, index) => (
+                    {chi?.map((c, index) => (
                         <label key={index} name="child">
                             <input type="text" defaultValue={c.first_name} name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
                             <input type="date" defaultValue={c.birth_date} name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setbirth_date(e.target.value) }} />

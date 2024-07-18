@@ -13,7 +13,7 @@
 
 .families-list-add-button {
   padding: 10px;
-  background-color: #5d57c9;
+  background-color: #c3c957;
   color: var(--text);
   border: none;
   border-radius: 5px;
@@ -56,22 +56,6 @@
   background-color: teal;
 }
 
-
-
-
-
-
-
-
-
-
-/* 
-
-
-
-
-
-
 .toggle-button {
   width: 50px;
   height: 25px;
@@ -92,47 +76,9 @@
   transition: transform 0.3s;
 }
 
-.toggle-button .on {
+/* .toggle-button.on {
   background-color: #007bff;
-}
-
-.toggle-button .on .toggle-circle {
-  transform: translateX(25px);
-}
-
-.toggle-button .off .toggle-circle {
-  transform: translateX(0);
 } */
-
-
-
-
-
-
-
-.toggle-button {
-  width: 50px;
-  height: 25px;
-  background-color: #ccc;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  padding: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.toggle-button .toggle-circle {
-  width: 20px;
-  height: 20px;
-  background-color: white;
-  border-radius: 50%;
-  transition: transform 0.3s;
-}
-
-.toggle-button.on {
-  background-color: #007bff;
-}
 
 .toggle-button.on .toggle-circle {
   transform: translateX(-25px);

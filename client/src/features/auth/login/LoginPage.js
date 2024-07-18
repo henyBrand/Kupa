@@ -1,7 +1,8 @@
 import "./loginPage.css"
+
 import { useLoginMutation } from "../authApiSlice";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const LoginPage = () => {
     const [login, { isError, error, isLoading, isSuccess, data }] = useLoginMutation()
     const navigate = useNavigate()
@@ -21,7 +22,12 @@ const LoginPage = () => {
 
     return (
         <div className="login-page">
+            <div className="navigation">
+                 <Link to="/login" className="login current">כניסה</Link>
+                <Link to="/register" className="register">הרשמה</Link>
+            </div>
             <form onSubmit={handleSubmit} className="login-page-form">
+
                 <h1>כניסת משתמשים</h1>
                 <input type="text" required name="username" id="username" placeholder="שם משתמש" />
                 <input type="password" required name="password" id="password" placeholder="סיסמה" />

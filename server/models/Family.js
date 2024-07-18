@@ -34,7 +34,7 @@ const familySchema = new mongoose.Schema({
     marital_status: {
         type: String,
         enum: ["נשוי/אה", "רווק/ה", "גרוש/ה", "פרוד/ה", "אלמן/נה"],
-        required: true
+        // required: true
     },
 
     bank_details: {
@@ -45,7 +45,7 @@ const familySchema = new mongoose.Schema({
             "branch_number": String,
             "account_number": String
         },
-        required: true
+        // required: true
     },
     tzFile:String,
     //סיבת הפניה

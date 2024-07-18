@@ -1,5 +1,4 @@
 import { MdChecklist, MdDensitySmall, MdDeselect, MdDesktopWindows, MdFamilyRestroom, MdLogout, MdSearch } from "react-icons/md"
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
 
@@ -20,101 +19,76 @@ const SideBar = () => {
 
 
     const employeeMenuItems = [
-        {
-            title: "דפים",
-            list: [
                 {
                     title: "ראשי",
                     path: "/dash",
-                    icon: <RxDashboard />,
+                    icon: <RxDashboard size={35}/>,
                 },
                 {
                     title: "משפחות",
                     path: "/dash/families",
-                    icon: <MdFamilyRestroom />,
+                    icon: <MdFamilyRestroom size={35}/>,
                 }, {
                     title: "נציגים",
                     path: "/dash/employees",
-                    icon: <IoPerson />,
+                    icon: <IoPerson size={35}/>,
                 }, {
                     title: "מנהלים",
                     path: "/dash/admins",
-                    icon: <BsFillPersonVcardFill />,
+                    icon: <BsFillPersonVcardFill size={35}/>,
                 }, {
-                    title: "עדכון פרטים אישיים",
+                    title: "עדכון פרטים",
                     path: role === "נציג" ? `/dash/employees/${_id}` : `/dash/admins/${_id}`,
-                    icon: <MdChecklist />,
+                    icon: <MdChecklist size={35}/>,
                 },
-            ]
-        },
-        {
-            title: "משתמשים",
-            list: [
+            
                 {
                     title: "הגדרות",
                     path: "/dash/settings",
-                    icon: <IoMdSettings />,
+                    icon: <IoMdSettings size={35}/>,
                 },
                 {
                     title: "אודות",
                     path: "/dash/about",
-                    icon: <MdDensitySmall />,
-                },
+                    icon: <MdDensitySmall size={35}/>,
+                }
             ]
 
 
-        }]
  
     const familyMenuItems = [
-        {
-            title: "דפים",
-            list: [
-                {
+             {
                     title: "ראשי",
                     path: "/dash",
-                    icon: <RxDashboard />,
+                    icon: <RxDashboard size={35}/>,
                 }, {
                     title: "עדכון פרטים אישיים",
                     path: `/dash/families/${_id}`,
-                    icon: <MdChecklist />,
+                    icon: <MdChecklist size={35}/>,
                 }, {
                     title: "סטטוס",
                     path: `/dash/families/status`,
-                    icon: <MdChecklist />,
+                    icon: <MdChecklist size={35}/>,
                 }, {
                     title: "פרטי נציג",
                     path: `/dash/families/emploeeDetails`,
-                    icon: <IoPerson />,
-                }
-            ]
-        },
-        {
-            title: "משתמשים",
-            list: [
+                    icon: <IoPerson size={35}/>,
+                },
                 {
                     title: "הגדרות",
                     path: "/dash/settings",
-                    icon: <IoMdSettings />,
+                    icon: <IoMdSettings size={35}/>,
                 },
                 {
                     title: "אודות",
                     path: "/dash/about",
-                    icon: <MdDensitySmall />,
-                },
+                    icon: <MdDensitySmall size={35}/>,
+                }
             ]
-        }]
-
-
 
     const menuItems = role === "מנהל" || role === "נציג" ? employeeMenuItems : familyMenuItems
 
-    // useEffect(()=>{
-    //     if(isSuccess){
-    //         navigate("/login")
-
-    //     }
-    // },[isSuccess])
-
+  
     const logoutClick = () => {
         logout()
         navigate("/login")
@@ -122,25 +96,23 @@ const SideBar = () => {
     }
     return <div className="side-bar">
         <div className="side-bar-user">
-            <div className="side-bar-user-details">
-                {role === "מנהל" ? <BsFillPersonVcardFill /> : role === "נציג" ? <IoPerson /> : <MdFamilyRestroom/>}
+                {role === "מנהל" ? <BsFillPersonVcardFill  size={20}/> : role === "נציג" ? <IoPerson size={20}/> : <MdFamilyRestroom size={20}/>}
                 <span className="side-bar-user-fullname">{name}</span>
-                <span className="side-bar-user-username">{username}</span>
                 <span className="side-bar-user-role">{role}</span>
-            </div>
+
         </div>
-        <ul className="side-bar-menu-list">{menuItems.map(cat => (<li key={cat.title}>
-            <span className="side-bar-menu-cat">{cat.title}</span>
-            {cat.list.map(item => (
+        <div >
+        <ul className="side-bar-menu-list" >{menuItems.map(item => (
                 <MenuLink item={item} key={item.title} />
             ))}
-        </li>)
-        )}
         </ul>
+        </div>
+        <div>
         <button onClick={logoutClick} className="side-bar-logout">
-            <MdLogout />
+            <MdLogout size={20}/>
             יציאה
         </button>
+        </div>
 
     </div>
 }

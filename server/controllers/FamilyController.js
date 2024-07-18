@@ -37,8 +37,8 @@ const getFamilyById = async (req, res) => {
 }
 
 const addFamily = async (req, res) => {
-    // const tzFile = (req.file?.filename ? req.file.filename : "")
-    // console.log(req.file);
+   
+    
     const { employee, name, username, password, address, phone, email, marital_status, bank_details, parent1, parent2, child } = req.body
     if (!name || !password || !username || !marital_status || !bank_details) {
         return res.status(400).json({
@@ -77,9 +77,7 @@ const addFamily = async (req, res) => {
 
 const updateTzFile = async (req, res) => {
     const tzFile = (req.file?.filename ? req.file.filename : "");
-    console.log("tzFile");
-    console.log(tzFile);
-
+    
     const { id } = req.params;
 
     const family = await Family.findById(id, { password: 0 });
@@ -107,10 +105,6 @@ const updateFamily = async (req, res) => {
     if (!id) {
         return res.status(404).send("ID is required")
     }
-    console.log("name");
-    console.log(name);
-    console.log("username");
-    console.log(username);
 
     const family = await Family.findById(id).exec()
     if (!family) {

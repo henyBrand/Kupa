@@ -4,10 +4,9 @@ import "./FamiliesList.css"
 import Search from "../../../components/search/Search"
 import useGetFilePath from "../../../hooks/useGetFilePath"
 import useAuth from "../../../hooks/useAuth"
-import { useGetAllEmployeesQuery } from "../../employee/employeesApiSlice"
-import { useState } from "react"
 import { FaFile, FaCirclePlus, FaRegPenToSquare } from "react-icons/fa6";
 import { MdCancel, MdCheckCircle } from "react-icons/md"
+import { LuFileText, LuFileX2 } from "react-icons/lu";
 
 const FamiliesList = () => {
     const { role, _id } = useAuth()
@@ -96,7 +95,7 @@ const FamiliesList = () => {
                                 </div>
                             </td>
                             <td>
-                                {family.tzFile && <a href={getFilePath(family.tzFile)} target="_blank" rel="noopener noreferrer"><FaFile /></a>}
+                                {family.tzFile ?<a href={getFilePath(family.tzFile)} target="_blank" rel="noopener noreferrer"><LuFileText /></a> :<LuFileX2 />                           }
 
                                 <Link to={`/dash/families/${family._id}`} className="families-list-button families-list-view"><FaRegPenToSquare />
                                 </Link>
@@ -110,3 +109,5 @@ const FamiliesList = () => {
 }
 
 export default FamiliesList
+
+

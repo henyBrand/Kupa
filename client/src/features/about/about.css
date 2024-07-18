@@ -1,0 +1,45 @@
+.about {
+    max-width: 800px; 
+    margin: 20px auto; 
+    padding: 20px;
+    background-color: var(--bgSoft);
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    color:var(--text); /* צבע טקסט */
+}
+
+.about h1 {
+    color: var(--textSoft); /* צבע כותרת */
+    text-align: center; /* מיקום מרכזי */
+    margin-bottom: 20px; /* רווח תחתון */
+    font-size: 2em; /* גודל גופן */
+}
+
+.about h3 {
+    color: var(--textSoft); /* צבע כותרות משנה */
+    margin-top: 30px; /* רווח עליון */
+    margin-bottom: 10px; /* רווח תחתון */
+}
+
+.about p {
+    line-height: 1.6; /* גובה שורה */
+    margin-bottom: 15px; /* רווח תחתון */
+}
+
+.about p:last-child {
+    margin-bottom: 0; /* ללא רווח תחתון לפסקה האחרונה */
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 15px; /* רווח פנימי קטן יותר */
+    }
+    
+    .about h1 {
+        font-size: 1.5em; /* גודל גופן קטן יותר */
+    }
+    
+    .about h3 {
+        font-size: 1.2em; /* גודל גופן קטן יותר לכותרות משנה */
+    }
+}

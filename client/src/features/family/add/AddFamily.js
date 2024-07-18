@@ -9,7 +9,7 @@ const AddFamily = () => {
     const [birthDate, setbirth_date] = useState("")
     const [tuitionS, settuition] = useState("")
     const [a, setA] = useState(false)
-    const [chai, setChai] = useState([])
+    const [chi, setChi] = useState([])
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -18,16 +18,16 @@ const AddFamily = () => {
         }
     }, [isSuccess])
 
- 
+
 
     const formSubmitChaild = () => {
         setA(false)
-        const objChaild = {
+        const objChild = {
             first_name: firstName,
             birth_date: birthDate,
             tuition: tuitionS
         }
-        setChai(prevChai => [...prevChai, objChaild]);
+        setChi(prevChai => [...prevChai, objChild]);
     }
 
 
@@ -62,7 +62,7 @@ const AddFamily = () => {
                 phone: objFamily.phone2,
                 occupation: objFamily.occupation2
             },
-            child: chai,
+            child: chi,
             bank_details: {
                 name: objFamily.name,
                 bank_number: objFamily.bank_number,
@@ -96,18 +96,26 @@ const AddFamily = () => {
                     <input type="text" name="phone2" placeholder="פלאפון" />
                     <input type="text" name="occupation2" placeholder="עיסוק" />
                 </label>
+                <h3>ילדים</h3> 
+                <button type="button" onClick={() => { setA(true) }} >פלוס </button>
 
-                <button type="button" onClick={()=>{setA(true)}}>פלוס </button>
+                {chi?.map((c, index) => (
+                    <label key={index} name="child">
+                        <input type="text" defaultValue={c.first_name} name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
+                        <input type="date" defaultValue={c.birth_date} name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setbirth_date(e.target.value) }} />
+                        <input type="text" defaultValue={c.tuition} name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { settuition(e.target.value) }} />
+                    </label>
+                ))}
                 {a && <form className="add-family-form">
 
                     <label name="child">
-                        <h3>ילדים</h3>
                         <input type="text" name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <input type="date" name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <input type="text" name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { setfirst_name(e.target.value) }} />
+                        <input type="date" name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setbirth_date(e.target.value) }} />
+                        <input type="text" name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { settuition(e.target.value) }} />
                     </label>
                     <button type="button" onClick={formSubmitChaild}>הוסף</button>
                 </form>}
+
                 <label name="address">
                     <input type="text" name="street" placeholder="רחוב" />
                     <input type="text" name="neighborhood" placeholder="שכונה" />
@@ -131,7 +139,7 @@ const AddFamily = () => {
                     <input type="text" required="true" name="branch_number" placeholder="מספר סניף" />
                     <input type="text" required="true" name="account_number" placeholder="מספר חשבון" />
                 </label>
-            
+
                 <button type="submit">שלח</button>
             </form>
 

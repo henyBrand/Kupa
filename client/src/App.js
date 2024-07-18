@@ -18,14 +18,17 @@ import FamilyStatus from './features/family/status/FamilyStatus';
 import EmploeeDetails from './features/family/emploeeDetails/EmploeeDetails'
 import Settings from './features/settings/Settings';
 import About from './features/about/About'
+import RegisterPage from './features/auth/register/RegisterPage'
 function App() {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<SiteLayout />}>
-          <Route index element={<h1>site</h1>} />
+          <Route index element={<LoginPage />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
           <Route element={<PersistLogin />}>
+
             <Route element={<RequireAuth allowRoles={["מנהל", "נציג", "משפחה"]} />}>
               <Route path='/dash' element={<DashLayout />}>
                 <Route index element={<Main />} />

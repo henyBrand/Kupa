@@ -43,6 +43,7 @@ const EmployeesList = () => {
                         <td>שם העובד</td>
                         <td>פלאפון</td>
                         <td>אימייל</td>
+                        <td>מס משפחות שלי</td>
                     </tr>
                 </thead>
                 <tbody>

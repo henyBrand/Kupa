@@ -1,42 +1,40 @@
-import useAuth from "../../../hooks/useAuth"
-import { useGetAllFamiliesQuery } from "../familiesApiSlice"
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
+import { useGetAllFamiliesQuery } from '../familiesApiSlice';
+import { GrReturn } from 'react-icons/gr';
+import './familyStatus.css';
 
 const FamilyStatus = () => {
-    const { _id } = useAuth()
-
-    const { data: familiesObj, isError, error, isSuccess, isLoading } = useGetAllFamiliesQuery()
+    const { _id } = useAuth();
+    const { data: familiesObj, isError, error, isLoading } = useGetAllFamiliesQuery();
 
     if (isLoading)
-        return <h1>Loading...</h1>
+        return <h1>Loading...</h1>;
     if (isError)
-        return <h1>{JSON.stringify(error)}</h1>
+        return <h1>{JSON.stringify(error)}</h1>;
 
-    const family = familiesObj?.data?.find(fam => fam._id === _id)
+    const family = familiesObj?.data?.find(fam => fam._id === _id);
 
     if (!family)
-        return <h1>no family found</h1>
-
-    // את השורות הבאות יש להפעיל בהתאם לצורך
-    // useEffect(() => {
-    //     if () {
-    //         if (role === "משפחה") {
-    //             navigate("/dash")
-    //         }
-    //         else {
-    //             navigate("/dash/families")
-    //         }
-    //     }
-    // }, [])
+        return <h1>No family found</h1>;
 
     return (
-        <>
-            FamilyStatus
+        <div className="family-status-container">
+            <h1 className="family-status-title">שלום משפחת {family.name}</h1>
+            {family.waiting ? <p>בקשתכם ממתינה לטיפול מנהל</p> : <p>בקשתכם אינה ממתינה לטיפול</p>}
+            {family.approved ? <p>בקשתכם אושרה ע"י המנהל</p> : <p>בקשתכם עדיין לא אושרה ע"י המנהל</p>}
+            <p>תאריך עדכון אחרון {new Date(family.updatedAt).toLocaleDateString('he-IL', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            })}</p>
+        
+            <Link to="/dash" className="return-link">
+                <GrReturn /> חזרה
+            </Link>
+        </div>
+    );
+};
 
-            <h1>שלום משפחת {family.name} </h1>
-
-
-        </>
-    )
-}
-
-export default FamilyStatus
+export default FamilyStatus;

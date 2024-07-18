@@ -3,8 +3,8 @@ const { NavLink } = require("react-router-dom")
 const MenuLink = ({ item }) => {
     return (
         <NavLink to={item.path} className="side-bar-menu-link">
-            {item.icon}
-            {item.title}
+           <p className="icon">{item.icon}</p> 
+           <p className="title">{item.title}</p>
         </NavLink>
     )
 }
