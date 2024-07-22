@@ -22,17 +22,24 @@ const FamilyStatus = () => {
     return (
         <div className="family-status-container">
             <h1 className="family-status-title">שלום משפחת {family.name}</h1>
-            {family.waiting ? <p>בקשתכם ממתינה לטיפול מנהל</p> : <p>בקשתכם אינה ממתינה לטיפול</p>}
-            {family.approved ? <p>בקשתכם אושרה ע"י המנהל</p> : <p>בקשתכם עדיין לא אושרה ע"י המנהל</p>}
-            <p>תאריך עדכון אחרון {new Date(family.updatedAt).toLocaleDateString('he-IL', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            })}</p>
-        
-            <Link to="/dash" className="return-link">
-                <GrReturn /> חזרה
-            </Link>
+            <div className="family-status-details">
+                
+                {family.waiting ? <p>בקשתכם ממתינה לטיפול מנהל</p> : <p>בקשתכם אינה ממתינה לטיפול</p>}
+
+                {family.approved ? <p>בקשתכם אושרה ע"י המנהל</p> : <p>בקשתכם עדיין לא אושרה ע"י המנהל</p>}
+
+                {!family.marital_status && <p>במערכת מעודכן כי עדיין לא עדכנתם פרטים אישיים <br /> נא הכנסו לעדכון פרטים כדי שנוכל לטפל בבקשתכם</p>}
+
+                {family.employee ? <p>הנציג שלכם הוא {family.employee.name}</p> : <p>עדיין לא קבלתם נציג</p>}
+
+                <p>תאריך עדכון אחרון {new Date(family.updatedAt).toLocaleDateString('he-IL', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                })}</p>
+
+            </div>
+
         </div>
     );
 };

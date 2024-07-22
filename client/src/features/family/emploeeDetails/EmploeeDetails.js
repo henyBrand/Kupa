@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useGetAllFamiliesQuery } from "../familiesApiSlice";
 import { MdAlternateEmail, MdCall } from "react-icons/md";
@@ -21,26 +20,24 @@ const EmploeeDetails = () => {
 
     return (
         <div className="employee-details-container">
-            <h1>שלום משפחת {family.name}</h1>
+            <h1 className="employee-details-title">שלום משפחת {family.name}</h1>
+            <div className="employee-details-content">
+                {family.employee ? <div><p>הנציג שלכם: <strong>{family.employee?.name}</strong></p>
+                <p>ילווה אתכם ויתמוך בכם בכל מצב -בזמני שמחה ובזמני קושי.</p>
+                <p>אל תהססו לפנות לנציג שלכם בכל שאלה או בקשה. הוא כאן כדי לעזור לכם.</p>
 
-            <p>הנציג שלכם: {family.employee?.name}</p>
-
-            <p>ילווה אתכם ויתמוך בכם בכל מצב -בזמני שמחה ובזמני קושי. </p>
-
-            <p>אל תהססו לפנות לנציג שלכם בכל שאלה או בקשה. הוא כאן כדי לעזור לכם.</p>
-
-            <h2>פרטי התקשרות:</h2>
-            <p>
-                <a href={`mailto:${family.employee?.email}`}>
-                    <SiGmail title={family.employee?.email}/>  מייל: {family.employee?.email}
-                </a>
-            </p>
-            <p>
-                <a href={`tel:${family.employee?.phone}`}>
-                    <MdCall title={family.employee?.phone}/> פלאפון: {family.employee?.phone}
-                </a>
-            </p>
-
+                <h2>פרטי התקשרות:</h2>
+                <p>
+                    <a href={`mailto:${family.employee?.email}`} className="contact-link">
+                        <SiGmail title={family.employee?.email} className="contact-icon" /> מייל: {family.employee?.email}
+                    </a>
+                </p>
+                <p>
+                    <a href={`tel:${family.employee?.phone}`} className="contact-link">
+                        <MdCall title={family.employee?.phone} className="contact-icon" /> פלאפון: {family.employee?.phone}
+                    </a>
+                </p></div>:<p>עדיין אין לכם נציג</p>}
+            </div>
         </div>
     );
 };

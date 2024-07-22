@@ -5,41 +5,40 @@
     background-color: var(--bgSoft);
     border-radius: 10px; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    color:var(--text); /* צבע טקסט */
+    color:var(--text); 
 }
-
 .about h1 {
-    color: var(--textSoft); /* צבע כותרת */
-    text-align: center; /* מיקום מרכזי */
-    margin-bottom: 20px; /* רווח תחתון */
-    font-size: 2em; /* גודל גופן */
+    color: var(--textSoft); 
+    text-align: center; 
+    margin-bottom: 20px; 
+    font-size: 2em; 
 }
 
 .about h3 {
-    color: var(--textSoft); /* צבע כותרות משנה */
-    margin-top: 30px; /* רווח עליון */
-    margin-bottom: 10px; /* רווח תחתון */
+    color: var(--textSoft); 
+    margin-top: 30px; 
+    margin-bottom: 10px; 
 }
 
 .about p {
-    line-height: 1.6; /* גובה שורה */
-    margin-bottom: 15px; /* רווח תחתון */
+    line-height: 1.6;
+    margin-bottom: 15px; 
 }
 
 .about p:last-child {
-    margin-bottom: 0; /* ללא רווח תחתון לפסקה האחרונה */
+    margin-bottom: 0; 
 }
 
 @media (max-width: 768px) {
     .about {
-        padding: 15px; /* רווח פנימי קטן יותר */
+        padding: 15px; 
     }
     
     .about h1 {
-        font-size: 1.5em; /* גודל גופן קטן יותר */
+        font-size: 1.5em; 
     }
     
     .about h3 {
-        font-size: 1.2em; /* גודל גופן קטן יותר לכותרות משנה */
+        font-size: 1.2em; 
     }
 }

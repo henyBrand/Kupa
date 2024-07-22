@@ -1,46 +1,55 @@
-import { Md3P, MdAccountBox, MdAccountCircle, MdAdd, MdAddPhotoAlternate, MdAddToPhotos, MdAlternateEmail, MdCall, MdCancel, MdCheckCircle, MdChecklist, MdContactMail, MdCopyright, MdDeleteOutline, MdDensitySmall, MdDesktopWindows, MdFamilyRestroom, MdFmdGood, MdGroupAdd, MdOutlineAccessTimeFilled } from "react-icons/md"
-import { BsFillPersonVcardFill, BsPersonSquare } from "react-icons/bs"
-import { IoPerson, IoPersonAdd } from "react-icons/io5";
-import { IoMdSettings } from "react-icons/io";
-import { FaCirclePlus } from "react-icons/fa6";
-
-import useAuth from "../../../hooks/useAuth"
+import React, { useEffect, useState } from 'react';
+import useAuth from "../../../hooks/useAuth";
+import './main.css';
 
 const Main = () => {
-    const { _id, username, role, name } = useAuth()
+    const { name } = useAuth();
 
-    return <div>
-        <h1>{name}</h1>
-        <MdCall />
-        <MdDensitySmall />
-        <MdDeleteOutline />
-        <MdCopyright />
-        <MdContactMail />
-        <MdChecklist />
-        <MdAlternateEmail />
-        <MdAddToPhotos />
-        <MdAddPhotoAlternate />
-        <MdAdd />
-        <MdAccountCircle />
-        <MdAccountBox />
-        <Md3P />
-        <MdCheckCircle />
-        <MdCancel />
-        <BsPersonSquare />
-        <BsFillPersonVcardFill />
-        <IoPerson />
-        <IoPersonAdd />
-        <IoMdSettings />
-        <MdOutlineAccessTimeFilled />
-        <MdGroupAdd />
-        <MdFmdGood />
-        <MdFamilyRestroom />
-        <MdDesktopWindows />
-        <FaCirclePlus />
-        <img src="logoKupa.png" />
-        <img src="logoKupa-removebg-preview.png" />
+    const sentences = [
+        `שלום ${name} וברוכים הבאים לאתר שלנו`,
+        "אנו כאן כדי לעזור לך.",
+        "צור קשר לפרטים נוספים",
+        "נשמח לשמוע תגובות..."
+    ];
 
-    </div>
-}
+    const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
+    const [currentText, setCurrentText] = useState('');
+    const [allTexts, setAllTexts] = useState([]);
+    const [charIndex, setCharIndex] = useState(0);
 
-export default Main
+    useEffect(() => {
+        let typingTimeout;
+        if (charIndex < sentences[currentSentenceIndex].length) {
+            typingTimeout = setTimeout(() => {
+                setCurrentText((prev) => prev + sentences[currentSentenceIndex][charIndex]);
+                setCharIndex(charIndex + 1);
+            }, 100); // זמן הקלדה בין אות לאות
+        } else {
+            typingTimeout = setTimeout(() => {
+                setAllTexts((prev) => [...prev, currentText]);
+                setCurrentText('');
+                setCharIndex(0);
+                setCurrentSentenceIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+                if (currentSentenceIndex === sentences.length - 1) {
+                    setAllTexts([]);
+                }
+            }, 1000); // זמן המתנה בין משפטים
+        }
+
+        return () => clearTimeout(typingTimeout);
+    }, [charIndex, currentSentenceIndex, sentences, currentText]);
+
+    return (
+        <div className='main'>
+            <div className="rotating-sentences">
+                {allTexts.map((text, index) => (
+                    <p key={index}>{text}</p>
+                ))}
+                <p>{currentText}</p>
+            </div>
+            <img className="logo" src="logoKupa-removebg-preview.png" alt="Logo" />
+        </div>
+    );
+};
+
+export default Main;
