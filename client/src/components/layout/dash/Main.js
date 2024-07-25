@@ -23,7 +23,7 @@ const Main = () => {
             typingTimeout = setTimeout(() => {
                 setCurrentText((prev) => prev + sentences[currentSentenceIndex][charIndex]);
                 setCharIndex(charIndex + 1);
-            }, 100); // זמן הקלדה בין אות לאות
+            }, 80); // זמן הקלדה בין אות לאות
         } else {
             typingTimeout = setTimeout(() => {
                 setAllTexts((prev) => [...prev, currentText]);

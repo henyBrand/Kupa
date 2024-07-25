@@ -14,23 +14,29 @@ const SingleFamily = () => {
 
     const { data: familiesObj, isError, error, isSuccess, isLoading } = useGetAllFamiliesQuery()
     const [updateFamily, { isSuccess: isUpdateSuccess }] = useUpdateFamilyMutation()
-    //בשביל הילדים
+    // בשביל הילדים
     const [firstName, setfirst_name] = useState("")
     const [birthDate, setbirth_date] = useState("")
     const [tuitionS, settuition] = useState("")
     const [add, setAdd] = useState(false)
     const [chi, setChai] = useState([])
 
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     useEffect(() => {
-        if (isUpdateSuccess) {
-            if (role === "משפחה") {
-                navigate("/dash")
-            }
-            else {
-                navigate("/dash/families")
-            }
+        if (isUpdateSuccess && role === "משפחה") {
+            setShowSuccessMessage(true);
+            setTimeout(() => {
+                if (role === "משפחה") {
+                    navigate("/dash");
+                } else {
+                    navigate("/dash/families");
+                }
+            }, 3000); // המתנה של 3 שניות לפני המעבר לדף הרצוי
+        } else if (isUpdateSuccess && role === "מנהל") {
+            navigate("/dash/families"); // או כל דף אחר שתרצה למנהל
         }
-    }, [isUpdateSuccess])
+    }, [isUpdateSuccess, navigate, role]);
 
     const family = familiesObj?.data?.find(fam => fam._id === familyId)
 
@@ -108,6 +114,13 @@ const SingleFamily = () => {
         await updateTzFile({ id: family._id, tzFile: file}) // עדכן את הקריאה לפונקציה updateTzFile
     }
 
+    if (showSuccessMessage) {
+        return (
+            <div className="success-fullscreen">
+                <div className="success-message">הפרטים נקלטו בהצלחה ויטופלו בהקדם</div>
+            </div>
+        );
+    }
 
     return (
         <div className="single-family-container">

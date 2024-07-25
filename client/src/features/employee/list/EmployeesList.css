@@ -1,60 +1,72 @@
-.employees-list{
+.employees-list {
     background-color: var(--bgSoft);
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
 }
-.employees-list-top{
+
+.employees-list-top {
     display: flex;
+    margin-bottom: 20px;
     align-items: center;
     justify-content: space-between;
-
 }
 
-.employees-list-add-button{
-    padding: 10px;
-    background-color: #5d57c9;
-    color: var(--text);
-    border: none;
-    border-radius: 5px;
+.employees-list-add-button {
+    color: var(--textSoft);
     cursor: pointer;
 }
 
-.employees-list-table{
-    width: 100%;
+.employees-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
-.employees-list-table td{
-    padding: 10px;
+.employee-card {
+    background-color: var(--bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 80vw;
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    align-items: center;
 }
 
-.employees-list-company{
+.employee-card-header {
+    margin: 10px;
+}
+
+.employee-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.employee-card-body {
+    margin: 10px;
+}
+
+.employee-card-footer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.employee-card-button {
+    padding: 5px 10px;
+    color: var(--textSoft);
+    cursor: pointer;
+    font-size:20px;
+    border: none;
+    background-color: var(--bg);
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    font-family: "Varela Round", sans-serif;
+
 }
 
-.employees-list-company-image{
-    border-radius: 50%;
-    object-fit: cover;
-}
-.employees-list-buttons{
-    display: flex;
-    gap:10px    
-}
-.employees-list-button{
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: var(--text);
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-}
 
-.employees-list-view{
-    background-color: teal;
-}
-
-.employees-list-delete{
-    background-color: crimson;
-}

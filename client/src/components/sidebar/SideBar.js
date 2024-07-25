@@ -71,7 +71,7 @@ const SideBar = () => {
                     icon: <MdChecklist size={35}/>,
                 }, {
                     title: "פרטי נציג",
-                    path: `/dash/families/emploeeDetails`,
+                    path: `/dash/families/employeeDetails`,
                     icon: <IoPerson size={35}/>,
                 },
                 {

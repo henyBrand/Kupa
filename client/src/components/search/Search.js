@@ -6,7 +6,7 @@ const Search = ({ placeholder }) => {
     const q = searchParams.get("q")
     return (
         <div className="search-container">
-            <MdSearch />
+            <MdSearch size={20} className="search-icon"/>
             <input type="text"
                 placeholder={placeholder}
                 onChange={(e => setSearchParams({ q: e.target.value }))}

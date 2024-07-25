@@ -15,7 +15,7 @@ import PersistLogin from './features/auth/PersistLogin';
 import SingleAdmin from './features/admin/view/SingleAdmin';
 import Main from './components/layout/dash/Main';
 import FamilyStatus from './features/family/status/FamilyStatus';
-import EmploeeDetails from './features/family/emploeeDetails/EmploeeDetails'
+import EmployeeDetails from './features/family/employeeDetails/EmployeeDetails'
 import Settings from './features/settings/Settings';
 import About from './features/about/About'
 import RegisterPage from './features/auth/register/RegisterPage'
@@ -35,7 +35,7 @@ function App() {
                 <Route path='families' element={<Outlet />}>
                   <Route path=':familyId' element={<SingleFamily />} />
                   <Route path='status' element={< FamilyStatus />} />
-                  <Route path='emploeeDetails' element={<EmploeeDetails />} />
+                  <Route path='employeeDetails' element={<EmployeeDetails />} />
                 </Route>
                 <Route path='settings' element={< Settings />} />
                 <Route path='about' element={<About />} />
