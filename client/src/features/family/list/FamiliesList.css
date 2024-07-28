@@ -90,3 +90,17 @@
   outline: none; 
 } */
 
+
+
+
+.families-list-top button.active {
+  background-color: var(--primaryColorDark);
+  color: var(--textLight);
+  transform: scale(1.02);
+}
+
+.families-list-top button:hover,
+.families-list-top button:focus {
+  background-color: var(--primaryColor);
+  outline: none;
+}

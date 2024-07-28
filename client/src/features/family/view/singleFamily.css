@@ -1,82 +1,149 @@
 .single-family-container {
-    display: flex;
-    gap: 50px;
-    margin-top: 20px;
-  }
-  
-  .single-family-info {
-    flex: 1;
-    background-color: var(--bgSoft);
-    padding: 20px;
-    border-radius: 10px;
-    font-weight: bold;
-    color: var(--textSoft);
-    height: max-content;
-  }
-  
-  .single-family-img-container{
-    width: 100%;
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-  }
-  .single-family-img-container img{
-   object-fit: contain;
-   width: 100% !important;
-  }
-  
-  .single-family-form-container {
-    flex: 3;
-    background-color: var(--bgSoft);
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .single-family-form{
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .single-family-form input, .single-family-form textarea, .single-family-form select{
-    padding: 20px;
-    border: 2px solid #2e374a;
-    border-radius: 5px;
-    background-color: var(--bg);
-    color: var(--text);
-    margin: 10px 0px;
-  }
-  
-  .single-family-form label{
-    font-size: 12px;
-  }
-  
-  .single-family-form button{
-    width: 100%;
-    padding: 20px;
-    background-color: teal;
-    color: var(--text);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
+  display: flex;
+  gap: 50px;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: var(--bgSoft);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  /* הוסף לסגנון ה-CSS */
+.single-family-info {
+  flex: 1;
+  padding: 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  height: max-content;
+  width: 100%;
+  background-color: var(--text);
+  color: var(--textSoft);
+  font-size: large;
+}
+
+
+
+.single-family-form-container {
+  flex: 3;
+  background-color: var(--bgSoft);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.single-family-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-family-form input,
+.single-family-form textarea,
+.single-family-form select {
+  padding: 20px;
+  border: 2px solid #2e374a;
+  border-radius: 5px;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 10px 0px;
+
+  padding: 10px;
+  /* border: 1px solid #ccc; */
+}
+
+.single-family-form label {
+  font-size: 12px;
+}
+
+.button {
+  width: 100%;
+  padding: 20px;
+  color: var(--textSoft);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: var(--text);
+}
+
+.add-button{
+  padding: 5px 10px;
+  color: var(--textSoft);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* הוסף לסגנון ה-CSS */
 .success-fullscreen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bgSoft);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999; /* על מנת להבטיח שההודעה תהיה מעל כל תוכן אחר */
+  z-index: 9999;
 }
 
 .success-message {
   font-size: 24px;
-  color:var(--textSoft) ;
+  color: var(--textSoft);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+.single-family-form .submit-button {
+  background: blue;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 0.3em;
+  cursor: pointer;
+}
+
+.add-button.submit {
+  background: green;
+  color: white;
+  padding: 0.5em;
+  border-radius: 0.3em;
+}
+
+.chai{
+  display: grid;
+  grid-column: auto auto;
+}
+
+.children-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.children-header h3 {
+  margin: 0;
+}
+
+.add-button {
+  padding: 5px;
+  color: var(--textSoft);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.children-list label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.children-list input {
+  margin: 5px 0;
 }

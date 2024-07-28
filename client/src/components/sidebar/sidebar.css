@@ -75,3 +75,10 @@
 .title{
     color: var(--text);
 }
+
+.side-bar-menu-link.active {
+    background-color: var(--bgSoft);
+    color: var(--textSoft);
+    border-bottom: solid var(--text) 2px;
+}
+

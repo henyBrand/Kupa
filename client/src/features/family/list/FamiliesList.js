@@ -19,35 +19,26 @@ const FamiliesList = () => {
     const { getFilePath } = useGetFilePath();
 
     const [waitingS, setWaiting] = useState(false);
-    const [allS, setAll] = useState(false);
+    const [allS, setAll] = useState(role === 'מנהל'); 
     const [approvedS, setApproved] = useState(false);
-    const [nazig, setNazig] = useState(false);
+    const [nazig, setNazig] = useState(role === 'נציג'); 
+    const [activeFilter, setActiveFilter] = useState(role === 'נציג' ? 'nazig' : (role === 'מנהל' ? 'all' : ''));
 
-    // Initialize state for original and filtered data
+  
     const [originalData, setOriginalData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         if (familiesObj?.data) {
             setOriginalData(familiesObj.data);
-            setFilteredData(familiesObj.data); // Initialize filtered data
+            setFilteredData(familiesObj.data); 
         }
     }, [familiesObj]);
 
     useEffect(() => {
         let data = [...originalData];
 
-        // Apply search filter
-        if (q) {
-            data = data.filter(family =>
-                (family.name?.toLowerCase() || '').includes(q.toLowerCase()) ||
-                (family.parent1?.first_name?.toLowerCase() || '').includes(q.toLowerCase()) ||
-                (family.parent2?.first_name?.toLowerCase() || '').includes(q.toLowerCase())
-            );
-        }
-
-        // Apply additional filters
-        if (nazig) {
+        if (role === 'נציג') {
             data = data.filter(fam => fam.employee?._id === _id);
         }
 
@@ -59,12 +50,20 @@ const FamiliesList = () => {
             data = data.filter(fam => fam.approved);
         }
 
-        if (allS) {
-            data = [...originalData]; // Reset to all families
+        if (allS && role === 'מנהל') {
+            data = [...originalData]; 
+        }
+
+        if (q) {
+            data = data.filter(family =>
+                (family.name?.toLowerCase() || '').includes(q.toLowerCase()) ||
+                (family.parent1?.first_name?.toLowerCase() || '').includes(q.toLowerCase()) ||
+                (family.parent2?.first_name?.toLowerCase() || '').includes(q.toLowerCase())
+            );
         }
 
         setFilteredData(data);
-    }, [originalData, q, waitingS, approvedS, nazig, _id, allS]);
+    }, [originalData, q, waitingS, approvedS, nazig, _id, allS, role]);
 
     if (isLoading) return <h1>Loading...</h1>;
     if (isError) return <h1>{JSON.stringify(error)}</h1>;
@@ -73,10 +72,10 @@ const FamiliesList = () => {
         <div className="families-list">
             <div className="families-list-top">
                 <Search placeholder="חיפוש לפי שם משפחה" />
-                <button onClick={() => { setWaiting(true); setApproved(false); setNazig(false); setAll(false); }}>הצג רק משפחות ממתינות לטיפול</button>
-                {role === 'נציג' && <button onClick={() => { setNazig(true); setWaiting(false); setApproved(false); setAll(false); }}>הצג רק משפחות שבטיפולי</button>}
-                <button onClick={() => { setApproved(true); setWaiting(false); setNazig(false); setAll(false); }}>הצג רק משפחות מאושרות</button>
-                <button onClick={() => { setAll(true); setWaiting(false); setNazig(false); setApproved(false); }}>הצג את כל המשפחות</button>
+                <button className={activeFilter === 'waiting' ? 'active' : ''} onClick={() => { setWaiting(true); setApproved(false); setNazig(role === 'נציג'); setAll(false); setActiveFilter('waiting'); }}>הצג רק משפחות ממתינות לטיפול</button>
+                <button className={activeFilter === 'approved' ? 'active' : ''} onClick={() => { setApproved(true); setWaiting(false); setNazig(role === 'נציג'); setAll(false); setActiveFilter('approved'); }}>הצג רק משפחות מאושרות</button>
+                {role === 'נציג' && <button className={activeFilter === 'nazig' ? 'active' : ''} onClick={() => { setNazig(true); setWaiting(false); setApproved(false); setAll(false); setActiveFilter('nazig'); }}> הצג את כל המשפחות שבטיפולי</button>}
+                {role === 'מנהל' && <button className={activeFilter === 'all' ? 'active' : ''} onClick={() => { setAll(true); setWaiting(false); setNazig(false); setApproved(false); setActiveFilter('all'); }}>הצג את כל המשפחות</button>}
 
                 <Link to="/dash/families/add" className="families-list-add-button"><FaCirclePlus size={30} /></Link>
             </div>
@@ -100,7 +99,7 @@ const FamiliesList = () => {
                             {family.tzFile ? (
                                 <a href={getFilePath(family.tzFile)} target="_blank" rel="noopener noreferrer" className="family-card-button"><LuFileText size={20} /></a>
                             ) : (
-                                <LuFileX2 size={20} color="var(--textSoft" />
+                                <LuFileX2 size={20} color="var(--textSoft)" />
                             )}
                             <Link to={`/dash/families/${family._id}`} className="family-card-button"><FaRegPenToSquare size={20} /></Link>
                         </div>

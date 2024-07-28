@@ -1,30 +1,31 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetAllFamiliesQuery, useUpdateFamilyMutation, useUpdateTzFileMutation } from "../familiesApiSlice"
-import "./singleFamily.css"
+import { useGetAllFamiliesQuery, useUpdateFamilyMutation, useUpdateTzFileMutation } from "../familiesApiSlice";
+import "./singleFamily.css";
 import useAuth from "../../../hooks/useAuth";
 import ChangeEmployeeForFamily from "./ChangeEmployeeForFamily";
-
+import { FaCirclePlus } from "react-icons/fa6";
+import { MdSend } from "react-icons/md";
 
 const SingleFamily = () => {
-    const [updateTzFile] = useUpdateTzFileMutation()
-    const { role } = useAuth()
-    const navigate = useNavigate()
-    const { familyId } = useParams()
+    const [updateTzFile] = useUpdateTzFileMutation();
+    const { role } = useAuth();
+    const navigate = useNavigate();
+    const { familyId } = useParams();
 
-    const { data: familiesObj, isError, error, isSuccess, isLoading } = useGetAllFamiliesQuery()
-    const [updateFamily, { isSuccess: isUpdateSuccess }] = useUpdateFamilyMutation()
-    // בשביל הילדים
-    const [firstName, setfirst_name] = useState("")
-    const [birthDate, setbirth_date] = useState("")
-    const [tuitionS, settuition] = useState("")
-    const [add, setAdd] = useState(false)
-    const [chi, setChai] = useState([])
+    const { data: familiesObj, isError, error, isSuccess, isLoading } = useGetAllFamiliesQuery();
+    const [updateFamily, { isSuccess: isUpdateSuccess }] = useUpdateFamilyMutation();
+
+    const [firstName, setFirstName] = useState("");
+    const [birthDate, setBirthDate] = useState("");
+    const [tuition, setTuition] = useState("");
+    const [add, setAdd] = useState(false);
+    const [chi, setChai] = useState([]);
 
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     useEffect(() => {
-        if (isUpdateSuccess && role === "משפחה") {
+        if (isUpdateSuccess) {
             setShowSuccessMessage(true);
             setTimeout(() => {
                 if (role === "משפחה") {
@@ -33,32 +34,34 @@ const SingleFamily = () => {
                     navigate("/dash/families");
                 }
             }, 3000); // המתנה של 3 שניות לפני המעבר לדף הרצוי
-        } else if (isUpdateSuccess && role === "מנהל") {
-            navigate("/dash/families"); // או כל דף אחר שתרצה למנהל
         }
     }, [isUpdateSuccess, navigate, role]);
 
-    const family = familiesObj?.data?.find(fam => fam._id === familyId)
+    const family = familiesObj?.data?.find(fam => fam._id === familyId);
 
     useEffect(() => {
         if (family) {
-            setChai(family.child)
+            setChai(family.child);
         }
-    }, [family])
+    }, [family]);
 
-    if (isLoading)
-        return <h1>Loading...</h1>
-    if (isError)
-        return <h1>{JSON.stringify(error)}</h1>
-    if (!family)
-        return <h1>no family found</h1>
+    if (isLoading) return <h1>Loading...</h1>;
+    if (isError) return <h1>{JSON.stringify(error)}</h1>;
+    if (!family) return <h1>No family found</h1>;
+
+    const handleChildChange = (index, field, value) => {
+        setChai(prevChai => {
+            const newChai = [...prevChai];
+            newChai[index] = { ...newChai[index], [field]: value };
+            return newChai;
+        });
+    };
 
     const formSubmit = (e) => {
-        e.preventDefault()
-        const data = new FormData(e.target)
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const objFamily = Object.fromEntries(data.entries());
 
-        const objFamily = Object.fromEntries(data.entries())
-        
         const newObjFamily = {
             name: objFamily.familyname,
             id: familyId,
@@ -87,7 +90,7 @@ const SingleFamily = () => {
                 phone: objFamily.phone2,
                 occupation: objFamily.occupation2
             },
-            child: chi,
+            child: chi, // פרטי הילדים המעודכנים
             bank_details: {
                 name: objFamily.name,
                 bank_number: objFamily.bank_number,
@@ -97,22 +100,26 @@ const SingleFamily = () => {
             approved: family.approved,
             waiting: family.waiting,
             tzFule: family.tzFile
-        }
-        updateFamily(newObjFamily)
-    }
-    const formSubmitChaild = () => {
-        setAdd(false)
-        const objChaild = {
+        };
+        updateFamily(newObjFamily);
+    };
+
+    const formSubmitChild = () => {
+        setAdd(false);
+        const objChild = {
             first_name: firstName,
             birth_date: birthDate,
-            tuition: tuitionS
-        }
-        setChai(prevChai => [...prevChai, objChaild]);
-    }
+            tuition: tuition
+        };
+        setChai(prevChai => [...prevChai, objChild]);
+        setFirstName("");
+        setBirthDate("");
+        setTuition("");
+    };
 
     const addTzFile = async (file) => {
-        await updateTzFile({ id: family._id, tzFile: file}) // עדכן את הקריאה לפונקציה updateTzFile
-    }
+        await updateTzFile({ id: family._id, tzFile: file });
+    };
 
     if (showSuccessMessage) {
         return (
@@ -129,11 +136,22 @@ const SingleFamily = () => {
             </div>
             <div className="single-family-form-container">
                 <form onSubmit={formSubmit} className="single-family-form">
-
-                    <input type="text" defaultValue={family.name} required name="familyname" placeholder="שם משפחה" />
                     
-                    <input type="text" defaultValue={family.username} required name="username" placeholder="שם משתמש" />
-                    <input type="password" defaultValue={family.password} name="password" placeholder="סיסמה" />
+                    <label name="familyname">
+                        <h3>שם משפחה</h3>
+                        <input type="text" defaultValue={family.name} required name="familyname" placeholder="שם משפחה" />
+                    </label>
+                   
+                    <label name="username">
+                        <h3>שם משתמש</h3>
+                        <input type="text" defaultValue={family.username} required name="username" placeholder="שם משתמש" />
+                    </label>
+                   
+                    <label name="password">
+                        <h3>סיסמה</h3>
+                        <input type="password" defaultValue={family.password} name="password" placeholder="סיסמה" />
+                    </label>
+
                     <label name="parent1">
                         <h3>פרטי הורה 1</h3>
                         <input type="text" defaultValue={family.parent1?.first_name} name="first_name1" placeholder="שם" />
@@ -142,6 +160,7 @@ const SingleFamily = () => {
                         <input type="text" defaultValue={family.parent1?.phone} name="phone1" placeholder="פלאפון" />
                         <input type="text" defaultValue={family.parent1?.occupation} name="occupation1" placeholder="עיסוק" />
                     </label>
+
                     <label name="parent2">
                         <h3>פרטי הורה 2</h3>
                         <input type="text" defaultValue={family.parent2?.first_name} name="first_name2" placeholder="שם" />
@@ -150,41 +169,92 @@ const SingleFamily = () => {
                         <input type="text" defaultValue={family.parent2?.phone} name="phone2" placeholder="פלאפון" />
                         <input type="text" defaultValue={family.parent2?.occupation} name="occupation2" placeholder="עיסוק" />
                     </label>
-                    <h3>ילדים</h3>
+
+                    <div className="children-header">
+                        <h3>ילדים</h3>
+                        <button type="button" className="add-button" onClick={() => setAdd(true)}>
+                            <FaCirclePlus size={30} />
+                        </button>
+                    </div>
+
+                    {add && (
+                        <label name="child">
+                            <h3>הוספת ילד</h3>
+                            <input
+                                type="text"
+                                value={firstName}
+                                placeholder="שם"
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                            <input
+                                type="date"
+                                value={birthDate}
+                                placeholder="תאריך לידה"
+                                onChange={(e) => setBirthDate(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                value={tuition}
+                                placeholder="עלות שכר לימוד"
+                                onChange={(e) => setTuition(e.target.value)}
+                            />
+                            <button type="button" className="add-button submit" onClick={formSubmitChild}>
+                                <MdSend />
+                            </button>
+                        </label>
+                    )}
+
                     {chi?.map((c, index) => (
                         <label key={index} name="child">
-                            <input type="text" defaultValue={c.first_name} name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
-                            <input type="date" defaultValue={c.birth_date} name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setbirth_date(e.target.value) }} />
-                            <input type="text" defaultValue={c.tuition} name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { settuition(e.target.value) }} />
+                            <input
+                                type="text"
+                                value={c.first_name}
+                                placeholder="שם"
+                                onChange={(e) => handleChildChange(index, 'first_name', e.target.value)}
+                            />
+                            <input
+                                type="date"
+                                value={c.birth_date}
+                                placeholder="תאריך לידה"
+                                onChange={(e) => handleChildChange(index, 'birth_date', e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                value={c.tuition}
+                                placeholder="עלות שכר לימוד"
+                                onChange={(e) => handleChildChange(index, 'tuition', e.target.value)}
+                            />
                         </label>
                     ))}
-                    <button type="button" onClick={() => { setAdd(true) }}>פלוס </button>
-                    {add && <label name="child">
-                        <h3>ילדים</h3>
-                        <input type="text" name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <input type="date" name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <input type="text" name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <button type="button" onClick={formSubmitChaild}>הוסף</button>
-                    </label>
-                    }
 
                     <label name="address">
+                        <h3>כתובת</h3>
                         <input type="text" defaultValue={family.address?.street} name="street" placeholder="רחוב" />
                         <input type="text" defaultValue={family.address?.neighborhood} name="neighborhood" placeholder="שכונה" />
                         <input type="text" defaultValue={family.address?.city} name="city" placeholder="עיר" />
                     </label>
 
-                    <input type="text" defaultValue={family.phone} name="phone" placeholder="טלפון" />
-                    <input type="email" defaultValue={family.email} name="email" placeholder="אימייל" />
+                    <label name="phone">
+                        <h3>פלאפון</h3>
+                        <input type="text" defaultValue={family.phone} name="phone" placeholder="טלפון" />
+                    </label>
 
-                    <select required name="marital_status">
-                        <option value="">מצב משפחתי</option>
-                        <option selected={family.marital_status === "נשוי/אה"} value="נשוי/אה">נשוי/אה</option>
-                        <option selected={family.marital_status === "רווק/ה"} value="רווק/ה">רווק/ה</option>
-                        <option selected={family.marital_status === "גרוש/ה"} value="גרוש/ה">גרוש/ה</option>
-                        <option selected={family.marital_status === "פרוד/ה"} value="פרוד/ה">פרוד/ה</option>
-                        <option selected={family.marital_status === "אלמן/נה"} value="אלמן/נה">אלמן/נה</option>
-                    </select>
+                    <label name="email">
+                        <h3>אימייל</h3>
+                        <input type="email" defaultValue={family.email} name="email" placeholder="אימייל" />
+                    </label>
+
+                    <label name="marital_status">
+                        <h3>מצב משפחתי</h3>
+                        <select required name="marital_status">
+                            <option value="">מצב משפחתי</option>
+                            <option selected={family.marital_status === "נשוי/אה"} value="נשוי/אה">נשוי/אה</option>
+                            <option selected={family.marital_status === "רווק/ה"} value="רווק/ה">רווק/ה</option>
+                            <option selected={family.marital_status === "גרוש/ה"} value="גרוש/ה">גרוש/ה</option>
+                            <option selected={family.marital_status === "פרוד/ה"} value="פרוד/ה">פרוד/ה</option>
+                            <option selected={family.marital_status === "אלמן/נה"} value="אלמן/נה">אלמן/נה</option>
+                        </select>
+                    </label>
 
                     <label name="bank_details">
                         <h3>פרטי בנק</h3>
@@ -194,15 +264,21 @@ const SingleFamily = () => {
                         <input type="text" defaultValue={family.bank_details?.account_number} required name="account_number" placeholder="מספר חשבון" />
                     </label>
 
-                    <label>צילום ת"ז</label>
-                    <input type="file" name="tzFile" onChange={(e) => { addTzFile((e.target.files[0])) }} />
+                    <label name="tzFile">
+                        <h3>צילום ת"ז</h3>
+                        <input type="file" name="tzFile" onChange={(e) => { addTzFile(e.target.files[0]) }} />
+                    </label>
 
-                    {role === 'מנהל' && <ChangeEmployeeForFamily family={family} />}
-                    <button>שלח</button>
+                    <label name="employee">
+                        <h3>נציג</h3>
+                        {role === 'מנהל' && <ChangeEmployeeForFamily family={family} />}
+                    </label>
+
+                    <button className="button" type="submit">שלח</button>
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SingleFamily
+export default SingleFamily;
