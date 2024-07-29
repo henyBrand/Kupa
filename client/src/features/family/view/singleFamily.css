@@ -16,7 +16,7 @@
   border-radius: 10px;
   font-weight: bold;
   height: max-content;
-  width: 100%;
+  /* width: 100%; */
   background-color: var(--text);
   color: var(--textSoft);
   font-size: large;
@@ -75,7 +75,6 @@
   background: none;
 }
 
-/* הוסף לסגנון ה-CSS */
 .success-fullscreen {
   position: fixed;
   top: 0;

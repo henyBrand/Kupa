@@ -1,8 +1,9 @@
 import { useGetAllEmployeesQuery, useUpdateEmployeeMutation } from "../employeesApiSlice"
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import "./singleEmployee.css"
+import useAuth from "../../../hooks/useAuth";
 
 const SingleEmployee = () => {
 
@@ -10,11 +11,23 @@ const SingleEmployee = () => {
     const { employeeId } = useParams()
     const { data: employeesObj, isError, error, isSuccess, isLoading } = useGetAllEmployeesQuery()
     const [updateEmployee, { isSuccess: isUpdateSuccess }] = useUpdateEmployeeMutation()
+    
+    const { role } = useAuth();
+
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     useEffect(() => {
         if (isUpdateSuccess) {
-            navigate("/dash/employees")
+            if (role === "נציג") {
+                setShowSuccessMessage(true);
+                setTimeout(() => {
+                    navigate("/dash");
+                }, 3000);
+            } else {
+                navigate("/dash/employees");
+            }
         }
-    }, [isUpdateSuccess])
+    }, [isUpdateSuccess, navigate, role]);
 
     if (isLoading)
         return <h1>Loading...</h1>
@@ -22,6 +35,7 @@ const SingleEmployee = () => {
         return <h1>{JSON.stringify(error)}</h1>
 
     const employee = employeesObj.data.find(emp => emp._id === employeeId)
+
     if (!employee)
         return <h1>no found</h1>
 
@@ -31,6 +45,15 @@ const SingleEmployee = () => {
         const objEmployee = Object.fromEntries(data.entries())
         updateEmployee(objEmployee)
     }
+
+    if (showSuccessMessage) {
+        return (
+            <div className="success-fullscreen">
+                <div className="success-message">הפרטים נקלטו בהצלחה ויטופלו בהקדם</div>
+            </div>
+        );
+    }
+
     return (
         <div className="single-employee-container">
             <div className="single-employee-info">

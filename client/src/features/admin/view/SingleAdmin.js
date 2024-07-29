@@ -1,8 +1,9 @@
 import { useGetAllEmployeesQuery, useUpdateEmployeeMutation } from "../employeesApiSlice"
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import "../../employee/view/singleEmployee.css"
+import useAuth from "../../../hooks/useAuth";
 
 const SingleAdmin = () => {
 
@@ -10,11 +11,23 @@ const SingleAdmin = () => {
     const { employeeId } = useParams()
     const { data: employeesObj, isError, error, isSuccess, isLoading } = useGetAllEmployeesQuery()
     const [updateEmployee, { isSuccess: isUpdateSuccess }] = useUpdateEmployeeMutation()
+ 
+    const { _id } = useAuth();
+
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
     useEffect(() => {
         if (isUpdateSuccess) {
-            navigate("/dash/admins")
+            if (_id === employeeId) {
+                setShowSuccessMessage(true);
+                setTimeout(() => {
+                    navigate("/dash");
+                }, 3000);
+            } else {
+                navigate("/dash/admins");
+            }
         }
-    }, [isUpdateSuccess])
+    }, [isUpdateSuccess, navigate, _id]);
 
     if (isLoading)
         return <h1>Loading...</h1>
@@ -31,6 +44,16 @@ const SingleAdmin = () => {
         const objEmployee = Object.fromEntries(data.entries())
         updateEmployee(objEmployee)
     }
+
+    if (showSuccessMessage) {
+        return (
+            <div className="success-fullscreen">
+                <div className="success-message">הפרטים נקלטו בהצלחה ויטופלו בהקדם</div>
+            </div>
+        );
+    }
+
+
     return (
         <div className="single-employee-container">
             <div className="single-employee-info">
@@ -39,16 +62,21 @@ const SingleAdmin = () => {
             <div className="single-employee-form-container">
             <form onSubmit={formSubmit} className="single-employee-form">
                     <input name="_id" defaultValue={employee._id} type="hidden" />
-                    <label>שם עובד</label>
+                    <label name="name">שם עובד
                     <input defaultValue={employee.name} type="text" name="name" placeholder="הכנס שם עובד"></input>
-                    <label>שם משתמש</label>
+                    </label>
+                    <label name="username">שם משתמש
                     <input defaultValue={employee.username} type="text" name="username" placeholder="הכנס שם משתמש"></input>
-                    <label>סיסמה</label>
+                    </label>
+                    <label name="password">סיסמה
                     <input defaultValue={employee.password} type="password" name="password" placeholder="הכנס סיסמה"></input>
-                    <label>פלאפון</label>
+                    </label>
+                    <label name="phone">פלאפון
                     <input defaultValue={employee.phone} type="text" name="phone" placeholder="הכנס פלאפון"></input>
-                    <label>אימייל</label>
+                    </label>
+                    <label name="email">אימייל
                     <input defaultValue={employee.email} type="email" name="email" placeholder="הכנס אימייל"></input>
+                    </label>
                     <button>עדכון</button>
                 </form>
             </div>

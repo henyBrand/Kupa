@@ -26,14 +26,14 @@ const SingleFamily = () => {
 
     useEffect(() => {
         if (isUpdateSuccess) {
-            setShowSuccessMessage(true);
-            setTimeout(() => {
-                if (role === "משפחה") {
+            if (role === "משפחה") {
+                setShowSuccessMessage(true);
+                setTimeout(() => {
                     navigate("/dash");
-                } else {
-                    navigate("/dash/families");
-                }
-            }, 3000); // המתנה של 3 שניות לפני המעבר לדף הרצוי
+                }, 3000);
+            } else {
+                navigate("/dash/families");
+            }
         }
     }, [isUpdateSuccess, navigate, role]);
 
@@ -90,7 +90,7 @@ const SingleFamily = () => {
                 phone: objFamily.phone2,
                 occupation: objFamily.occupation2
             },
-            child: chi, // פרטי הילדים המעודכנים
+            child: chi,
             bank_details: {
                 name: objFamily.name,
                 bank_number: objFamily.bank_number,
@@ -136,17 +136,17 @@ const SingleFamily = () => {
             </div>
             <div className="single-family-form-container">
                 <form onSubmit={formSubmit} className="single-family-form">
-                    
+
                     <label name="familyname">
                         <h3>שם משפחה</h3>
                         <input type="text" defaultValue={family.name} required name="familyname" placeholder="שם משפחה" />
                     </label>
-                   
+
                     <label name="username">
                         <h3>שם משתמש</h3>
                         <input type="text" defaultValue={family.username} required name="username" placeholder="שם משתמש" />
                     </label>
-                   
+
                     <label name="password">
                         <h3>סיסמה</h3>
                         <input type="password" defaultValue={family.password} name="password" placeholder="סיסמה" />
@@ -268,11 +268,15 @@ const SingleFamily = () => {
                         <h3>צילום ת"ז</h3>
                         <input type="file" name="tzFile" onChange={(e) => { addTzFile(e.target.files[0]) }} />
                     </label>
-
-                    <label name="employee">
-                        <h3>נציג</h3>
-                        {role === 'מנהל' && <ChangeEmployeeForFamily family={family} />}
-                    </label>
+                    {role === 'מנהל' &&
+                        <label name="employee">
+                            <h3>נציג</h3>
+                            <ChangeEmployeeForFamily family={family} />
+                        </label>
+                    }
+                    {role != 'מנהל' &&
+                            <input name="employee" defaultValue={family.employee._id} type="hidden" />
+                    }
 
                     <button className="button" type="submit">שלח</button>
                 </form>
