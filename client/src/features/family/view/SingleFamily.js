@@ -132,7 +132,7 @@ const SingleFamily = () => {
     return (
         <div className="single-family-container">
             <div className="single-family-info">
-                {`${family.name} ${family.parent1?.first_name} ${family.parent2?.first_name}`}
+                {`${family.name} ${family.parent1?.first_name ? family.parent1.first_name : ""} ${family.parent2?.first_name ? family.parent2.first_name : ""}`}
             </div>
             <div className="single-family-form-container">
                 <form onSubmit={formSubmit} className="single-family-form">
@@ -235,7 +235,7 @@ const SingleFamily = () => {
                     </label>
 
                     <label name="phone">
-                        <h3>פלאפון</h3>
+                        <h3>טלפון</h3>
                         <input type="text" defaultValue={family.phone} name="phone" placeholder="טלפון" />
                     </label>
 

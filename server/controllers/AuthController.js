@@ -9,7 +9,7 @@ const login = async (req, res) => {
     if (!username || !password) {
         return res.status(401).json({
             error: true,
-            message: "All fields are required",
+            message: "חובה למלא את כל השדות",
             data: null
         });
     }
@@ -66,7 +66,7 @@ const refresh = async (req, res) => {
         if (err) {
             return res.status(403).json({
                 error: true,
-                message: "Forbidden",
+                message: "נכשל",
                 data: null
             });
         }
@@ -118,7 +118,7 @@ const register = async (req, res) => {
     if (!name || !password || !username ) {
         return res.status(400).json({
             error: true,
-            message: "name, username, password are required",
+            message: "שם שם משתמש וסיסמה הם שדות חובה",
             data: null
         });
     }
@@ -130,7 +130,7 @@ const register = async (req, res) => {
     if (duplicate) {
         return res.status(409).json({
             error: true,
-            message: "duplicate username",
+            message: "שם משתמש זה כבר נמצא בשימוש - בחר שם משתמש אחר",
             data: null
         });
     }
@@ -139,7 +139,7 @@ const register = async (req, res) => {
     if (!family) {
         return res.status(404).json({
             error: true,
-            message: "no family",
+            message: "משפחה לא נמצאה",
             data: null
         });
     }

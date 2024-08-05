@@ -5,31 +5,44 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 30px;
+    position: relative;
     color: var(--textSoft);
     font-weight: bold;
-    
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 30px; 
 }
-/* p{
-    align-items: center;
-    justify-content: center
-} */
+
+body {
+    padding-bottom: 100px; 
+}
 
 .footer-menu {
     display: flex;
     gap: 20px;
 }
 
-/* .footer-input {
-    background-color: transparent;
-    border: none;
-    color: var(--text)
-} */
-
 .footer-icons {
     display: flex;
     gap: 20px;
 }
-.footer-text{
+
+.footer-text {
     font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 10px;
+        font-size: 10px;
+    }
+
+    .footer-menu, .footer-icons {
+        gap: 10px;
+    }
+
+    .footer-text {
+        font-size: 10px;
+    }
 }

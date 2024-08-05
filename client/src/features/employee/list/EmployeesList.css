@@ -59,14 +59,59 @@
     padding: 5px 10px;
     color: var(--textSoft);
     cursor: pointer;
-    font-size:20px;
+    font-size: 20px;
     border: none;
     background-color: var(--bg);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: "Varela Round", sans-serif;
-
 }
 
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+    .employee-card {
+        grid-template-columns: 1fr;
+        min-width: 100%;
+    }
+}
 
+@media (max-width: 768px) {
+    .employees-list {
+        padding: 15px;
+    }
+
+    .employee-card {
+        padding: 15px;
+        min-width: 100%;
+    }
+
+    .employee-card-button {
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    .employee-name {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .employees-list {
+        padding: 10px;
+    }
+
+    .employee-card {
+        padding: 10px;
+        min-width: 100%;
+    }
+
+    .employee-card-button {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .employee-name {
+        font-size: 14px;
+    }
+}

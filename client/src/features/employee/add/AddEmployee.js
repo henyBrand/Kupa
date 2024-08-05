@@ -19,17 +19,19 @@ const AddEmployee = () => {
     }
     return (
         <div className="add-employee-container">
+
+            <div className="add-employee-info">
+                <h3>הוספת נציג חדש</h3>
+            </div>
+
             <form onSubmit={formSubmit} className="add-employee-form">
+
                 <input type="text" required name="name" placeholder="שם הנציג" />
                 <input type="text" required name="username" placeholder="שם משתמש" />
                 <input type="password" required name="password" placeholder="סיסמה" />
                 <input type="text" name="phone" placeholder="פלאפון" />
                 <input type="email" name="email" placeholder="אימייל" />
-                {/* <select name="role"> */}
-                    {/* <option value="">בחר תפקיד</option> */}
-                    {/* <option value="נציג">נציג</option> */}
-                    {/* <option value="מנהל">מנהל</option> */}
-                {/* </select> */}
+               
                 <button type="submit">שלח</button>
             </form>
 

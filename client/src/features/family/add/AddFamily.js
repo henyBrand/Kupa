@@ -1,40 +1,52 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useAddFamilyMutation } from "../familiesApiSlice"
-import "./addFamily.css"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAddFamilyMutation } from "../familiesApiSlice";
+import "./addFamily.css";
+import { FaCirclePlus } from "react-icons/fa6";
+import { MdSend } from "react-icons/md";
 
 const AddFamily = () => {
-    const [addFamily, { data, isError, error, isSuccess, isLoading }] = useAddFamilyMutation()
-    const [firstName, setfirst_name] = useState("")
-    const [birthDate, setbirth_date] = useState("")
-    const [tuitionS, settuition] = useState("")
-    const [a, setA] = useState(false)
-    const [chi, setChi] = useState([])
+    const [addFamily, { data, isError, error, isSuccess, isLoading }] = useAddFamilyMutation();
+    const [firstName, setFirstName] = useState("");
+    const [birthDate, setBirthDate] = useState("");
+    const [tuition, setTuition] = useState("");
+    const [add, setAdd] = useState(false);
+    const [chi, setChai] = useState([]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     useEffect(() => {
         if (isSuccess) {
-            navigate("/dash/families")
+            navigate("/dash/families");
         }
-    }, [isSuccess])
+    }, [isSuccess, navigate]);
 
-
-
-    const formSubmitChaild = () => {
-        setA(false)
+    const formSubmitChild = () => {
+        setAdd(false);
         const objChild = {
             first_name: firstName,
             birth_date: birthDate,
-            tuition: tuitionS
-        }
-        setChi(prevChai => [...prevChai, objChild]);
-    }
+            tuition: tuition
+        };
+        setChai(prevChai => [...prevChai, objChild]);
+        setFirstName("");
+        setBirthDate("");
+        setTuition("");
+    };
 
+    const handleChildChange = (index, field, value) => {
+        const updatedChildren = chi.map((child, i) => {
+            if (i === index) {
+                return { ...child, [field]: value };
+            }
+            return child;
+        });
+        setChai(updatedChildren);
+    };
 
     const formSubmit = (e) => {
-        e.preventDefault()
-        const data = new FormData(e.target)
-        const objFamily = Object.fromEntries(data.entries())
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const objFamily = Object.fromEntries(data.entries());
 
         const newObjFamily = {
             name: objFamily.name,
@@ -64,87 +76,157 @@ const AddFamily = () => {
             },
             child: chi,
             bank_details: {
-                name: objFamily.name,
+                name: objFamily.bank_name,
                 bank_number: objFamily.bank_number,
                 branch_number: objFamily.branch_number,
                 account_number: objFamily.account_number
             },
-        }
+        };
 
-        addFamily(newObjFamily)
-    }
+        addFamily(newObjFamily);
+    };
     return (
         <div className="add-family-container">
-            {/* //////////////////// */}
-            <form onSubmit={formSubmit} className="add-family-form">
-                <input type="text" required name="name" placeholder="שם משפחה" />
-                <input type="text" required name="username" placeholder="שם משתמש" />
-                <input type="password" required name="password" placeholder="סיסמה" />
-                <label name="parent1">
-                    <h3>פרטי הורה 1</h3>
-                    <input type="text" name="first_name1" placeholder="שם" />
-                    <input type="text" name="tz1" placeholder="ת.ז." />
-                    <input type="date" name="birth_date1" placeholder="תאריך לידה" />
-                    <input type="text" name="phone1" placeholder="פלאפון" />
-                    <input type="text" name="occupation1" placeholder="עיסוק" />
-                </label>
-                <label name="parent2">
-                    <h3>פרטי הורה 2</h3>
-                    <input type="text" name="first_name2" placeholder="שם" />
-                    <input type="text" name="tz2" placeholder="ת.ז." />
-                    <input type="date" name="birth_date2" placeholder="תאריך לידה" />
-                    <input type="text" name="phone2" placeholder="פלאפון" />
-                    <input type="text" name="occupation2" placeholder="עיסוק" />
-                </label>
-                <h3>ילדים</h3> 
-                <button type="button" onClick={() => { setA(true) }} >פלוס </button>
+            <div className="add-family-info">
+                <h3>הוספת משפחה חדשה</h3>
+            </div>
+            <div className="add-family-form-container">
+                <form onSubmit={formSubmit} className="add-family-form">
 
-                {chi?.map((c, index) => (
-                    <label key={index} name="child">
-                        <input type="text" defaultValue={c.first_name} name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <input type="date" defaultValue={c.birth_date} name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setbirth_date(e.target.value) }} />
-                        <input type="text" defaultValue={c.tuition} name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { settuition(e.target.value) }} />
+                    <label name="familyname">
+                        <h3>שם משפחה</h3>
+                        <input type="text" required name="familyname" placeholder="שם משפחה" />
                     </label>
-                ))}
-                {a && <form className="add-family-form">
 
-                    <label name="child">
-                        <input type="text" name="first_name" placeholder="שם" onChange={(e) => { setfirst_name(e.target.value) }} />
-                        <input type="date" name="birth_date" placeholder="תאריך לידה" onChange={(e) => { setbirth_date(e.target.value) }} />
-                        <input type="text" name="tuition" placeholder="עלות שכר לימוד" onChange={(e) => { settuition(e.target.value) }} />
+                    <label name="username">
+                        <h3>שם משתמש</h3>
+                        <input type="text" required name="username" placeholder="שם משתמש" />
                     </label>
-                    <button type="button" onClick={formSubmitChaild}>הוסף</button>
-                </form>}
 
-                <label name="address">
-                    <input type="text" name="street" placeholder="רחוב" />
-                    <input type="text" name="neighborhood" placeholder="שכונה" />
-                    <input type="text" name="city" placeholder="עיר" />
-                </label>
-                <input type="text" name="phone" placeholder="טלפון" />
-                <input type="email" name="email" placeholder="אימייל" />
+                    <label name="password">
+                        <h3>סיסמה</h3>
+                        <input type="password" name="password" placeholder="סיסמה" />
+                    </label>
 
-                <select required="true" name="marital_status">
-                    <option value="">מצב משפחתי</option>
-                    <option value="נשוי/אה">נשוי/אה</option>
-                    <option value="רווק/ה">רווק/ה</option>
-                    <option value="גרוש/ה">גרוש/ה</option>
-                    <option value="פרוד/ה">פרוד/ה</option>
-                    <option value="אלמן/נה">אלמן/נה</option>
-                </select>
-                <label name="bank_details">
-                    <h3>פרטי בנק</h3>
-                    <input type="text" required="true" name="name" placeholder="שם בעל החשבון" />
-                    <input type="text" required="true" name="bank_number" placeholder="מספר בנק" />
-                    <input type="text" required="true" name="branch_number" placeholder="מספר סניף" />
-                    <input type="text" required="true" name="account_number" placeholder="מספר חשבון" />
-                </label>
+                    <label name="parent1">
+                        <h3>פרטי הורה 1</h3>
+                        <input type="text" name="first_name1" placeholder="שם" />
+                        <input type="text" name="tz1" placeholder="ת.ז." />
+                        <input type="date" name="birth_date1" placeholder="תאריך לידה" />
+                        <input type="text" name="phone1" placeholder="פלאפון" />
+                        <input type="text" name="occupation1" placeholder="עיסוק" />
+                    </label>
 
-                <button type="submit">שלח</button>
-            </form>
+                    <label name="parent2">
+                        <h3>פרטי הורה 2</h3>
+                        <input type="text" name="first_name2" placeholder="שם" />
+                        <input type="text" name="tz2" placeholder="ת.ז." />
+                        <input type="date" name="birth_date2" placeholder="תאריך לידה" />
+                        <input type="text" name="phone2" placeholder="פלאפון" />
+                        <input type="text" name="occupation2" placeholder="עיסוק" />
+                    </label>
 
+                    <div className="children-header">
+                        <h3>ילדים</h3>
+                        <button type="button" className="add-button" onClick={() => setAdd(true)}>
+                            <FaCirclePlus size={30} />
+                        </button>
+                    </div>
+
+                    {add && (
+                        <label name="child">
+                            <h3>הוספת ילד</h3>
+                            <input
+                                type="text"
+                                // value={firstName}
+                                placeholder="שם"
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
+                            <input
+                                type="date"
+                                // value={birthDate}
+                                placeholder="תאריך לידה"
+                                onChange={(e) => setBirthDate(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                // value={tuition}
+                                placeholder="עלות שכר לימוד"
+                                onChange={(e) => setTuition(e.target.value)}
+                            />
+                            <button type="button" className="add-button submit" onClick={formSubmitChild}>
+                                <MdSend />
+                            </button>
+                        </label>
+                    )}
+
+                    {chi?.map((c, index) => (
+                        <label key={index} name="child">
+                            <input
+                                type="text"
+                                // value={c.first_name}
+                                placeholder="שם"
+                                onChange={(e) => handleChildChange(index, 'first_name', e.target.value)}
+                            />
+                            <input
+                                type="date"
+                                // value={c.birth_date}
+                                placeholder="תאריך לידה"
+                                onChange={(e) => handleChildChange(index, 'birth_date', e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                // value={c.tuition}
+                                placeholder="עלות שכר לימוד"
+                                onChange={(e) => handleChildChange(index, 'tuition', e.target.value)}
+                            />
+                        </label>
+                    ))}
+
+                    <label name="address">
+                        <h3>כתובת</h3>
+                        <input type="text" name="street" placeholder="רחוב" />
+                        <input type="text" name="neighborhood" placeholder="שכונה" />
+                        <input type="text" name="city" placeholder="עיר" />
+                    </label>
+
+                    <label name="phone">
+                        <h3>טלפון</h3>
+                        <input type="text" name="phone" placeholder="טלפון" />
+                    </label>
+
+                    <label name="email">
+                        <h3>אימייל</h3>
+                        <input type="email" name="email" placeholder="אימייל" />
+                    </label>
+
+                    <label name="marital_status">
+                        <h3>מצב משפחתי</h3>
+                        <select required name="marital_status">
+                            <option value="">מצב משפחתי</option>
+                            <option value="נשוי/אה">נשוי/אה</option>
+                            <option value="רווק/ה">רווק/ה</option>
+                            <option value="גרוש/ה">גרוש/ה</option>
+                            <option value="פרוד/ה">פרוד/ה</option>
+                            <option value="אלמן/נה">אלמן/נה</option>
+                        </select>
+                    </label>
+
+                    <label name="bank_details">
+                        <h3>פרטי בנק</h3>
+                        <input type="text" required name="name" placeholder="שם בעל החשבון" />
+                        <input type="text" required name="bank_number" placeholder="מספר בנק" />
+                        <input type="text" required name="branch_number" placeholder="מספר סניף" />
+                        <input type="text" required name="account_number" placeholder="מספר חשבון" />
+                    </label>
+
+                    <button className="button" type="submit">שלח</button>
+                    {error && error.data?.message}
+
+                </form>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default AddFamily
+export default AddFamily;

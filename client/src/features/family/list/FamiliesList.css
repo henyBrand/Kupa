@@ -69,38 +69,111 @@
 }
 
 
-
-
-/* Style for the buttons */
 .families-list-top button {
-  background-color: var(--bgSoft); /* Primary color for the button */
-  color: var(--textSoft); /* Text color that contrasts with the button background */
+  background-color: var(--bgSoft); 
+  color: var(--textSoft); 
   border: none;
-  border-radius: 5px; /* Slightly rounded corners */
-  padding: 10px 20px; /* Increased padding for a solid look */
-  font-size: 16px; /* Slightly larger text for better readability */
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  font-size: 16px; 
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transition effects */
 }
-/* 
-.families-list-top button:hover,
-.families-list-top button:focus {
-  background-color: var(--primaryColorDark);
-  transform: scale(1.02); 
-  outline: none; 
-} */
-
-
 
 
 .families-list-top button.active {
-  background-color: var(--primaryColorDark);
-  color: var(--textLight);
-  transform: scale(1.02);
+  color: var(--text);
 }
 
-.families-list-top button:hover,
-.families-list-top button:focus {
-  background-color: var(--primaryColor);
-  outline: none;
+
+
+
+
+
+
+
+.family-card-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
+
+.family-card-button {
+  padding: 5px 10px;
+  color: var(--textSoft);
+  cursor: pointer;
+  font-size: 20px;
+  border: none;
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.status-text {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.file-text, .edit-text {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.toggle-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.family-card-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.family-card-button {
+  padding: 5px 10px;
+  color: var(--textSoft);
+  cursor: pointer;
+  font-size: 20px;
+  border: none;
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.status-text {
+  font-size: 14px; /* גודל כתב קטן יותר */
+  margin-left: 5px;
+}
+
+.file-text, .edit-text {
+  font-size: 14px; /* גודל כתב קטן יותר */
+  margin-left: 5px;
+}
+
+.toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.toggle-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

@@ -8,7 +8,7 @@ const getAllFamilies = async (req, res) => {
     if (!family.length) {
         return res.status(400).json({
             error: true,
-            message: "no family",
+            message: "משפחה לא נמצאה",
             data: null
         })
     }
@@ -25,7 +25,7 @@ const getFamilyById = async (req, res) => {
     if (!family) {
         return res.status(400).json({
             error: true,
-            message: "no family",
+            message: "משפחה לא נמצאה",
             data: null
         })
     }
@@ -43,7 +43,7 @@ const addFamily = async (req, res) => {
     if (!name || !password || !username || !marital_status || !bank_details) {
         return res.status(400).json({
             error: true,
-            message: "name, username, password, marital_status and bank_details are required",
+            message: "שם, שם משתמש, סיסמה, מצב משפחתי ,ופרטי בנק הם שדות חובה",
             data: null
         })
     }
@@ -55,7 +55,7 @@ const addFamily = async (req, res) => {
     if (duplicate) {
         return res.status(409).json({
             error: true,
-            message: "duplicate username",
+            message: "שם משתמש זה כבר נמצא בשימוש - בחר שם משתמש אחר",
             data: null
         })
     }
@@ -64,7 +64,7 @@ const addFamily = async (req, res) => {
     if (!family) {
         return res.status(404).json({
             error: true,
-            message: "no family",
+            message: "משפחה לא נמצאה",
             data: null
         })
     }
@@ -84,7 +84,7 @@ const updateTzFile = async (req, res) => {
     if (!family) {
         return res.status(400).json({
             error: true,
-            message: "no family",
+            message: "משפחה לא נמצאה",
             data: null
         });
     }
@@ -110,12 +110,11 @@ const updateFamily = async (req, res) => {
     if (!family) {
         return res.status(400).json({
             error: true,
-            message: "no family",
+            message: "משפחה לא נמצאה",
             data: null
         })
     }
     if (password) {
-        // const hashPassword = await bcrypt.hash(password, 10)
         const hashPassword = bcrypt.hashSync(password, 10)
 
         family.password = hashPassword
@@ -126,7 +125,7 @@ const updateFamily = async (req, res) => {
         if (duplicate && duplicate.username !== family.username) {
             return res.status(409).json({
                 error: true,
-                message: "duplicate username",
+                message: "שם משתמש זה כבר נמצא בשימוש - בחר שם משתמש אחר",
                 data: null
             })
         }
@@ -169,7 +168,7 @@ const deleteFamily = async (req, res) => {
     if (!family) {
         return res.status(400).res.json({
             error: true,
-            message: "no family found",
+            message: "משפחה לא נמצאהה",
             data: null
         })
     }
@@ -180,17 +179,7 @@ const deleteFamily = async (req, res) => {
         message: "The family was successfully deleted",
         data: deletedFamily
     })
-    //המורה עשתה שדה deleted
-    //והיא לא מחקה באמת אלא עדכנה true/ false
-    //לחשוב מה מתאים לנו
-    //ואם כן -להוסיף את השדה במודל ולחצן בריקאט ואולי עוד דברים
-    // family.deleted=true
-    // const updateFamily = await family.save()
-    // res.json({
-    //     error: false,
-    //     message: "The family was successfully deleted",
-    //     data: {username:updateFamily.username,_id:updateFamily._id}
-    // })
+   
 }
 
 module.exports = { getAllFamilies, getFamilyById, addFamily, updateFamily, deleteFamily, updateTzFile } 

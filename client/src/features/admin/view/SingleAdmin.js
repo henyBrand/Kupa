@@ -62,21 +62,16 @@ const SingleAdmin = () => {
             <div className="single-employee-form-container">
             <form onSubmit={formSubmit} className="single-employee-form">
                     <input name="_id" defaultValue={employee._id} type="hidden" />
-                    <label name="name">שם עובד
+                    <label>שם עובד</label>
                     <input defaultValue={employee.name} type="text" name="name" placeholder="הכנס שם עובד"></input>
-                    </label>
-                    <label name="username">שם משתמש
+                    <label>שם משתמש</label>
                     <input defaultValue={employee.username} type="text" name="username" placeholder="הכנס שם משתמש"></input>
-                    </label>
-                    <label name="password">סיסמה
+                    <label>סיסמה</label>
                     <input defaultValue={employee.password} type="password" name="password" placeholder="הכנס סיסמה"></input>
-                    </label>
-                    <label name="phone">פלאפון
+                    <label>פלאפון</label>
                     <input defaultValue={employee.phone} type="text" name="phone" placeholder="הכנס פלאפון"></input>
-                    </label>
-                    <label name="email">אימייל
+                    <label>אימייל</label>
                     <input defaultValue={employee.email} type="email" name="email" placeholder="הכנס אימייל"></input>
-                    </label>
                     <button>עדכון</button>
                 </form>
             </div>

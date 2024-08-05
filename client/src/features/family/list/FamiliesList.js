@@ -19,19 +19,19 @@ const FamiliesList = () => {
     const { getFilePath } = useGetFilePath();
 
     const [waitingS, setWaiting] = useState(false);
-    const [allS, setAll] = useState(role === 'מנהל'); 
+    const [allS, setAll] = useState(role === 'מנהל');
     const [approvedS, setApproved] = useState(false);
-    const [nazig, setNazig] = useState(role === 'נציג'); 
+    const [nazig, setNazig] = useState(role === 'נציג');
     const [activeFilter, setActiveFilter] = useState(role === 'נציג' ? 'nazig' : (role === 'מנהל' ? 'all' : ''));
 
-  
+
     const [originalData, setOriginalData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         if (familiesObj?.data) {
             setOriginalData(familiesObj.data);
-            setFilteredData(familiesObj.data); 
+            setFilteredData(familiesObj.data);
         }
     }, [familiesObj]);
 
@@ -51,7 +51,7 @@ const FamiliesList = () => {
         }
 
         if (allS && role === 'מנהל') {
-            data = [...originalData]; 
+            data = [...originalData];
         }
 
         if (q) {
@@ -83,25 +83,28 @@ const FamiliesList = () => {
                 {filteredData?.map(family => (
                     <div key={family._id} className="family-card">
                         <div className="family-card-header">
-                            <div className="family-name">{family.name} {family.parent1?.first_name} {family.parent2 ? "ו": ""}{family.parent2?.first_name}</div>
+                            <div className="family-name">{family.name} {family.parent1?.first_name} {family.parent2 ? "ו" : ""}{family.parent2?.first_name}</div>
                         </div>
                         <div className="family-card-body">
                             <p>מספר ילדים - {family.child?.length}</p>
                             {family.employee && role === 'מנהל' && <p>נציג - {family.employee?.name}</p>}
                         </div>
+
                         <div className="family-card-actions">
                             <div className={`toggle-button ${family.waiting ? 'on' : 'off'} family-card-button`} onClick={() => { updateFamily({ ...family, id: family._id, waiting: !family.waiting }) }}>
                                 <div className="toggle-circle">{family.waiting ? <MdCheckCircle size={20} /> : <MdCancel size={20} />}</div>
+                                <span className="status-text">{family.waiting ? 'ממתין' : 'לא ממתין'}</span>
                             </div>
                             <div className={`toggle-button ${family.approved ? 'on' : 'off'} family-card-button`} onClick={() => { updateFamily({ ...family, id: family._id, approved: !family.approved }) }}>
                                 <div className="toggle-circle">{family.approved ? <MdCheckCircle size={20} /> : <MdCancel size={20} />}</div>
+                                <span className="status-text">{family.approved ? 'מאושר' : 'לא מאושר'}</span>
                             </div>
                             {family.tzFile ? (
-                                <a href={getFilePath(family.tzFile)} target="_blank" rel="noopener noreferrer" className="family-card-button"><LuFileText size={20} /></a>
+                                <a href={getFilePath(family.tzFile)} target="_blank" rel="noopener noreferrer" className="family-card-button"><LuFileText size={20} /><span className="file-text">קובץ</span></a>
                             ) : (
-                                <LuFileX2 size={20} color="var(--textSoft)" />
+                                <div className="family-card-button"><LuFileX2 size={20}  /><span className="file-text">אין קובץ</span></div>
                             )}
-                            <Link to={`/dash/families/${family._id}`} className="family-card-button"><FaRegPenToSquare size={20} /></Link>
+                            <Link to={`/dash/families/${family._id}`} className="family-card-button"><FaRegPenToSquare size={20} /><span className="edit-text">עדכון</span></Link>
                         </div>
                     </div>
                 ))}

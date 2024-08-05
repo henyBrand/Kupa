@@ -6,7 +6,7 @@ const getAllEmployee = async (req, res) => {
     if (!employee.length) {
         return res.status(400).json({
             error: true,
-            message: "no employee",
+            message: "הנציג לא נמצא",
             data: null
         })
     }
@@ -22,7 +22,7 @@ const getEmployeeById = async (req, res) => {
     if (!employee) {
         return res.status(400).json({
             error: true,
-            message: "no employee",
+            message: "הנציג לא נמצא",
             data: null
         })
     }
@@ -37,7 +37,7 @@ const addEmployee = async (req, res) => {
     if (!name || !password || !username || (role !== 'נציג' && role !== 'מנהל' && role)) {
         return res.status(400).json({
             error: true,
-            message: "name, username and password are required11",
+            message: "שם שם משתמש וסיסמה הם חובה",
             data: null
         })
     }
@@ -48,7 +48,7 @@ const addEmployee = async (req, res) => {
     } if (duplicate) {
         return res.status(409).json({
             error: true,
-            message: "duplicate username",
+            message: "שם משתמש זה כבר נמצא בשימוש - בחר שם משתמש אחר",
             data: null
         })
     }
@@ -57,7 +57,7 @@ const addEmployee = async (req, res) => {
     if (!employee) {
         return res.status(404).json({
             error: true,
-            message: "no employee",
+            message: "הנציג לא נמצא",
             data: null
         })
     }
@@ -70,12 +70,12 @@ const addEmployee = async (req, res) => {
 const updateEmployee = async (req, res) => {
 
     const { _id, name, username, password, phone, email, role } = req.body
-    if (!_id) return res.status(404).send("ID is required")
+    if (!_id) return res.status(404).send("ID הוא שדה חובה")
 
     if (role !== 'נציג' && role !== 'מנהל' && role) {
         return res.status(400).json({
             error: true,
-            message: "role not valid",
+            message: "לא מורשה",
             data: null
         })
     }
@@ -84,7 +84,7 @@ const updateEmployee = async (req, res) => {
     if (!employee) {
         return res.status(400).json({
             error: true,
-            message: "no employee",
+            message: "הנציג לא נמצא",
             data: null
         })
     }
@@ -97,7 +97,7 @@ const updateEmployee = async (req, res) => {
         if (duplicate && duplicate.username !== employee.username) {
             return res.status(409).json({
                 error: true,
-                message: "duplicate username",
+                message: "שם משתמש זה כבר נמצא בשימוש - בחר שם משתמש אחר",
                 data: null
             })
         }
@@ -129,7 +129,7 @@ const deleteEmployee = async (req, res) => {
     if (!employee) {
         return res.json({
             error: true,
-            message: "no employee found",
+            message: "הנציג לא נמצא",
             data: null
         })
     }

@@ -1,6 +1,7 @@
 import { MdChecklist, MdDensitySmall, MdFamilyRestroom, MdLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
+import { GrStatusGood } from "react-icons/gr";
 
 import "./sidebar.css";
 import MenuLink from "./MenuLink";
@@ -20,37 +21,37 @@ const SideBar = () => {
             title: "ראשי",
             path: "/dash",
             end: true, // התאמה מדויקת לנתיב /dash
-            icon: <RxDashboard size={35} />,
+            icon: <RxDashboard className="icon" />,
         },
         {
             title: "משפחות",
             path: "/dash/families",
-            icon: <MdFamilyRestroom size={35} />,
+            icon: <MdFamilyRestroom className="icon" />,
         },
         {
             title: "נציגים",
             path: "/dash/employees",
-            icon: <IoPerson size={35} />,
+            icon: <IoPerson className="icon" />,
         },
         {
             title: "מנהלים",
             path: "/dash/admins",
-            icon: <BsFillPersonVcardFill size={35} />,
+            icon: <BsFillPersonVcardFill className="icon" />,
         },
         {
             title: "עדכון פרטים",
             path: role === "נציג" ? `/dash/employees/${_id}` : `/dash/admins/${_id}`,
-            icon: <MdChecklist size={35} />,
+            icon: <MdChecklist className="icon" />,
         },
         {
             title: "הגדרות",
             path: "/dash/settings",
-            icon: <IoMdSettings size={35} />,
+            icon: <IoMdSettings className="icon" />,
         },
         {
             title: "אודות",
             path: "/dash/about",
-            icon: <MdDensitySmall size={35} />,
+            icon: <MdDensitySmall className="icon" />,
         }
     ];
 
@@ -59,32 +60,32 @@ const SideBar = () => {
             title: "ראשי",
             path: "/dash",
             end: true, // התאמה מדויקת לנתיב /dash
-            icon: <RxDashboard size={35} />,
+            icon: <RxDashboard className="icon" />,
         },
         {
-            title: "עדכון פרטים אישיים",
+            title: "עדכון פרטים",
             path: `/dash/families/${_id}`,
-            icon: <MdChecklist size={35} />,
+            icon: <MdChecklist className="icon" />,
         },
         {
             title: "סטטוס",
             path: `/dash/families/status`,
-            icon: <MdChecklist size={35} />,
+            icon: <GrStatusGood className="icon" />,
         },
         {
             title: "פרטי נציג",
             path: `/dash/families/employeeDetails`,
-            icon: <IoPerson size={35} />,
+            icon: <IoPerson className="icon" />,
         },
         {
             title: "הגדרות",
             path: "/dash/settings",
-            icon: <IoMdSettings size={35} />,
+            icon: <IoMdSettings className="icon" />,
         },
         {
             title: "אודות",
             path: "/dash/about",
-            icon: <MdDensitySmall size={35} />,
+            icon: <MdDensitySmall className="icon" />,
         }
     ];
 

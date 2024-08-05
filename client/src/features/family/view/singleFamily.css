@@ -47,9 +47,6 @@
   background-color: var(--bg);
   color: var(--text);
   margin: 10px 0px;
-
-  padding: 10px;
-  /* border: 1px solid #ccc; */
 }
 
 .single-family-form label {
@@ -96,19 +93,9 @@
   text-align: center;
 }
 
-
-.single-family-form .submit-button {
-  background: blue;
-  color: white;
-  padding: 0.5em 1em;
-  border: none;
-  border-radius: 0.3em;
-  cursor: pointer;
-}
-
 .add-button.submit {
-  background: green;
-  color: white;
+  background: var(--textSoft);
+  color: var(--bg);
   padding: 0.5em;
   border-radius: 0.3em;
 }
@@ -127,14 +114,6 @@
 
 .children-header h3 {
   margin: 0;
-}
-
-.add-button {
-  padding: 5px;
-  color: var(--textSoft);
-  cursor: pointer;
-  border: none;
-  background: none;
 }
 
 .children-list label {
