@@ -1,23 +1,3 @@
-// const express = require("express")
-// const multer = require("multer")
-
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         //אם אנחנו רוצות שכל אחד יוכל לעלות כמה קבצים אולי נפתח לכל אחד תיקייה לפי השם שלו וכך אם יש לו כבר תיקייה זה יכנס לשם ואם לא הוא יצור לו תיקיה
-//         //השאלה היא אם יש אפשרות כבר בדף הזה לדעת את שם המשפחה 
-//         cb(null, './public')
-//     },
-//     filename: function (req, file, cb) {
-//         //צריך להחליט על שם לקובץ אולי תעודות זהות 
-
-//         //const unique = Date.now() + "-" + Family.username
-//         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
-//         cb(null, uniqueSuffix + "-" + file.originalname)
-//     }
-
-// })
-
-// const upload = multer({ storage: storage })
 const express = require("express")
 const multer = require("multer")
 
