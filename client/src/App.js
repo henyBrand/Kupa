@@ -1,5 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom"
+// import { HashRouter as Router, Routes, Route, Outlet } from "react-router-dom";
+
 import SiteLayout from './components/layout/site/SiteLayout';
 import DashLayout from './components/layout/dash/DashLayout';
 import AdminsList from './features/admin/list/AdminsList'
@@ -19,6 +21,7 @@ import EmployeeDetails from './features/family/employeeDetails/EmployeeDetails'
 import Settings from './features/settings/Settings';
 import About from './features/about/About'
 import RegisterPage from './features/auth/register/RegisterPage'
+import Conversation from './features/conversation/Conversation';
 function App() {
   return (
     <Router>
@@ -37,6 +40,7 @@ function App() {
                   <Route path='status' element={< FamilyStatus />} />
                   <Route path='employeeDetails' element={<EmployeeDetails />} />
                 </Route>
+                <Route path='conversation/:user2Id' element={<Conversation />} />
                 <Route path='settings' element={< Settings />} />
                 <Route path='about' element={<About />} />
                 <Route element={<RequireAuth allowRoles={["מנהל", "נציג"]} />}>
@@ -57,6 +61,7 @@ function App() {
                   </Route>
                 </Route>
               </Route>
+
             </Route>
           </Route>
         </Route>

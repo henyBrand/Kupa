@@ -273,9 +273,9 @@ const SingleFamily = () => {
                             <h3>נציג</h3>
                             <ChangeEmployeeForFamily family={family} />
                         </label>
-                    }
+                    }                   
                     {role != 'מנהל' &&
-                            <input name="employee" defaultValue={family.employee._id} type="hidden" />
+                            <input name="employee" defaultValue={family.employee?._id} type="hidden" />
                     }
 
                     <button className="button" type="submit">שלח</button>
