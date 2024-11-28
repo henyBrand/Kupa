@@ -7,7 +7,6 @@ import { useState } from "react";
 import "./conversation.css"
 
 const Conversation = () => {
-    // מחליף את המשתנים הקבועים בגישה דינמית
     const { _id: user1Id } = useAuth();
     const { user2Id } = useParams();
 
@@ -31,7 +30,7 @@ const Conversation = () => {
 
     // טיפול במצבים של טעינה ושגיאה
     if (isLoading) return <h1>Loading...</h1>;
-    if (isError) return <h1>{JSON.stringify(error)}</h1>;
+    // if (isError) return <h1>{JSON.stringify(error)}</h1>;
 
     const addNewConversation = async () => {
         try {
@@ -57,9 +56,6 @@ const Conversation = () => {
                     id: conversation._id,
                     messages: [...conversation.messages, newMessage],
                 })
-                if (newMes.data) {
-                    alert("ההודעה נוספה")
-                }
                 setNewMessage({ content: "", sender: user1 }); // איפוס ההודעה
                 refetch(); // רענון הנתונים
             } catch (error) {
@@ -71,19 +67,27 @@ const Conversation = () => {
     return (
         <div className="chat-container">
             {conversation ? (
-                // תוכן שיוצג אם יש שיחה
                 <div>
-                    <h2>Messages:</h2>
-                    <div>
-                        {conversation.messages?.map((m, index) => (
-                            <div
-                                key={index}
-                                className={`message ${m.sender === user1 ? "left" : "right"}`}
-                            >
+                    <h2>שיחה עם...</h2>
+                    {conversation.messages?.map((m, index) => (
+                        <div
+                            key={index}
+                            className={`message-wrapper ${m.sender === user1 ? "left" : "right"}`}
+                        >
+                            <div className={`message ${m.sender === user1 ? "left" : "right"}`}>
                                 {m.content}
                             </div>
-                        ))}
-                    </div>
+                            <p className="time">
+                                {new Date(m.createdAt).toLocaleDateString('he-IL', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric',
+                                })}, {new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </p>
+                        </div>
+                    ))}
+
+
                     <form onSubmit={handleSubmit} className="chat-input-container">
                         <input
                             type="text"
@@ -95,17 +99,15 @@ const Conversation = () => {
                     </form>
                 </div>
             ) : (
-                // תוכן שיוצג אם אין שיחה
                 <div>
-                    <p>
-                        עדיין לא קיימת שיחה בינכם,לחץ ליצירת שיחה חדשה
-                    </p>
-                    <button onClick={addNewConversation}><TbMessageCirclePlus />
+                    <p>עדיין לא קיימת שיחה בינכם, לחץ ליצירת שיחה חדשה</p>
+                    <button onClick={addNewConversation}>
+                        <TbMessageCirclePlus />
                     </button>
                 </div>
-            )
-            }
-        </div >
+            )}
+        </div>
+
     );
 };
 
